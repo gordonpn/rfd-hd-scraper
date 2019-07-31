@@ -14,9 +14,9 @@ public class App {
         Batch batch = new Batch();
         Elements threads;
 
-        for (int i = 0; i < 6; i++) {
-            threads = connection.connect(i);
+//        for (int i = 0; i < 6; i++) {
+        threads = connection.connect(0);
             batch.readThreads(threads);
-        }
+//        }
     }
 }

@@ -16,7 +16,6 @@ public class Connection {
 
     public Connection() {
         this.url = "http://forums.redflagdeals.com/hot-deals-f9/";
-        ;
     }
 
     public Elements connect(int page) {
@@ -28,7 +27,7 @@ public class Connection {
             doc = Optional.ofNullable(Jsoup.connect(url).get());
 
             if (doc.isPresent()) {
-                return doc.get().getElementsByClass("row-item");
+                return doc.get().getElementsByClass("topiclist topics with_categories");
             }
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, e.getMessage());

@@ -19,6 +19,10 @@ public class Thread {
     public Thread() {
     }
 
+    public Thread(String threadID) {
+        this.threadID = threadID;
+    }
+
     public String getThreadID() {
         return this.threadID;
     }
