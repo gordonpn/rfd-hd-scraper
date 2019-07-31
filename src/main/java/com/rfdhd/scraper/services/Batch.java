@@ -9,7 +9,7 @@ public class Batch {
         Connection connection = new Connection();
     }
 
-    public void loopThreads(Elements threads) {
+    public void readThreads(Elements threads) {
         for (Element thread : threads) {
             System.out.println(thread.getElementsByClass("topictitle"));
         }

@@ -12,8 +12,11 @@ public class App {
     public static void main(String[] args) {
         Connection connection = new Connection();
         Batch batch = new Batch();
+        Elements threads;
 
-        Elements threads = connection.connect(0);
-        batch.loopThreads(threads);
+        for (int i = 0; i < 6; i++) {
+            threads = connection.connect(i);
+            batch.readThreads(threads);
+        }
     }
 }
