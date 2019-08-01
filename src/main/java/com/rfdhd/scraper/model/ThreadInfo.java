@@ -1,6 +1,6 @@
 package com.rfdhd.scraper.model;
 
-public class Thread {
+public class ThreadInfo {
 
     String threadID;
 
@@ -16,10 +16,10 @@ public class Thread {
 
     String threadCategory;
 
-    public Thread() {
+    public ThreadInfo() {
     }
 
-    public Thread(String threadID) {
+    public ThreadInfo(String threadID) {
         this.threadID = threadID;
     }
 
