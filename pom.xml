@@ -28,6 +28,7 @@
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>1.11.3</version>
+            <scope>web scraper</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.lucene</groupId>

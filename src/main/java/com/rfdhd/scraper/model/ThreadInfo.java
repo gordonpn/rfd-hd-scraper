@@ -51,6 +51,10 @@ public class ThreadInfo {
         return this.posts;
     }
 
+    public int getPostsInt() {
+        return Integer.parseInt(posts.replaceAll(",", ""));
+    }
+
     public void setPosts(String value) {
         this.posts = value;
     }
@@ -60,7 +64,6 @@ public class ThreadInfo {
     }
 
     public int getVotesInt() {
-//        return Integer.parseInt(votes.replaceAll("[+-]", ""));
         return Integer.parseInt(votes);
     }
 

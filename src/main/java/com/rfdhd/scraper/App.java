@@ -10,6 +10,7 @@ public class App {
     public static void main(String[] args) {
         Scraper scraper = new Scraper();
 
+        // todo move this hardcoding into a config file to read from
         scraper.connect(1);
     }
 }
