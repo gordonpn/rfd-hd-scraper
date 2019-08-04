@@ -52,7 +52,11 @@ public class ThreadInfo {
     }
 
     public int getPostsInt() {
-        return Integer.parseInt(posts.replaceAll(",", ""));
+        if (posts == null) {
+            return 0;
+        } else {
+            return Integer.parseInt(posts.replaceAll(",", ""));
+        }
     }
 
     public void setPosts(String value) {
@@ -64,7 +68,11 @@ public class ThreadInfo {
     }
 
     public int getVotesInt() {
-        return Integer.parseInt(votes);
+        if (votes == null) {
+            return 0;
+        } else {
+            return Integer.parseInt(votes);
+        }
     }
 
     public void setVotes(String value) {
@@ -76,7 +84,11 @@ public class ThreadInfo {
     }
 
     public int getViewsInt() {
-        return Integer.parseInt(views.replaceAll(",", ""));
+        if (views == null) {
+            return 0;
+        } else {
+            return Integer.parseInt(views.replaceAll(",", ""));
+        }
     }
 
     public void setViews(String value) {

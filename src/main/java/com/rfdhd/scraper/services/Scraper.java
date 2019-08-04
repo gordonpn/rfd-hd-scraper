@@ -7,9 +7,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,8 +38,9 @@ public class Scraper {
         for (Element line : list) {
             parse(line, threadMap);
         }
-        System.out.println(calculateAvgPosts(threadMap));
-        System.out.println(calculateAvgViews(threadMap));
+//        threadMap.values().forEach(threadInfo -> System.out.println(threadInfo.getPostsInt()));
+//        System.out.println(calculateAvgPosts(threadMap));
+        System.out.println(calculateMedianVotes(threadMap));
         return threadMap;
     }
 
@@ -101,9 +100,12 @@ public class Scraper {
         return sum / threadMap.size();
     }
 
-    private int calculateMedianVotes() {
-        // todo calculate
-        return 0;
+    private int calculateMedianVotes(Map<String, ThreadInfo> threadMap) {
+        List<Integer> votes = new ArrayList<>();
+        threadMap.values().forEach(threadInfo -> votes.add(threadInfo.getVotesInt()));
+        votes.sort(Integer::compareTo);
+        System.out.println(Arrays.toString(votes.toArray()));
+        return votes.get(votes.size() / 2);
     }
 
 }
