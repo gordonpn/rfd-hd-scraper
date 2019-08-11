@@ -5,65 +5,76 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.pmw.tinylog.Logger;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Scraper {
 
-    private static final Logger LOGGER = Logger.getLogger(Scraper.class.getName());
+    int pages;
 
-    private String url;
+    Map<String, ThreadInfo> threads;
 
-    public Scraper() {
-        this.url = "http://forums.redflagdeals.com/hot-deals-f9/";
+    public Scraper(int pages) {
+        this.pages = pages;
     }
 
-    public void connect(int pages){
+    public Map<String, ThreadInfo> getThreadsMap() {
+
+        if (threads == null) {
+            threads = scrape();
+        }
+        threads.remove(null);
+        return threads;
+    }
+
+    private Map<String, ThreadInfo> scrape() {
+        Map<String, ThreadInfo> threadsMap = new HashMap<>();
+        Map<String, ThreadInfo> threadsMapPerPage = new HashMap<>();
         Elements threads;
+
         for (int i = 0; i < pages; i++) {
-            threads = this.scrapePage(i);
+            threads = scrapePerPage(i);
             if (threads != null) {
-                this.readThreads(threads);
+                threadsMapPerPage = readThreads(threads, new HashMap<>());
+                threadsMap.putAll(threadsMapPerPage);
             }
         }
+        return threadsMap;
     }
 
-    private Map<String, ThreadInfo> readThreads(Elements threads) {
-        Map<String, ThreadInfo> threadMap = new HashMap<>();
-
-        Elements list = threads.select("li");
-        for (Element line : list) {
-            parse(line, threadMap);
-        }
-//        threadMap.values().forEach(threadInfo -> System.out.println(threadInfo.getPostsInt()));
-//        System.out.println(calculateAvgPosts(threadMap));
-        System.out.println(calculateMedianVotes(threadMap));
-        return threadMap;
-    }
-
-    private Elements scrapePage(int page) {
+    private Elements scrapePerPage(int page) {
+        String url = "http://forums.redflagdeals.com/hot-deals-f9/";
         try {
             Optional<Document> doc;
-            if (page != 0 && page != 1) {
-                url = url.concat(String.valueOf(page));
+            if (page != 0) {
+                url = url.concat(String.valueOf(page + 1));
             }
             doc = Optional.ofNullable(Jsoup.connect(url).get());
-
+            Logger.info("Scraping: " + url);
             if (doc.isPresent()) {
                 return doc.get().getElementsByClass("topiclist topics with_categories");
             }
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, e.getMessage());
+            Logger.error(e.getMessage());
         }
-
         return null;
     }
 
-    private void parse(Element line, Map<String, ThreadInfo> threadMap) {
+    private Map<String, ThreadInfo> readThreads(Elements threads, Map<String, ThreadInfo> threadsMap) {
+        Elements list = threads.select("li");
+
+        for (Element line : list) {
+            threadsMap.putAll(parse(line, threadsMap));
+        }
+
+        return threadsMap;
+    }
+
+    private Map<String, ThreadInfo> parse(Element line, Map<String, ThreadInfo> threadsMap) {
         ThreadInfo threadInfo = new ThreadInfo();
+
         String id = line.attr("data-thread-id");
         if (!id.equals("")) {
             threadInfo.setThreadID(id);
@@ -81,13 +92,15 @@ public class Scraper {
             String link = line.getElementsByClass("topic_title_link").attr("href");
             threadInfo.setLink(prefix.concat(link));
         }
-        filter(threadInfo, threadMap);
+
+        threadsMap.put(threadInfo.getThreadID(), threadInfo);
+
+        return threadsMap;
     }
 
     private void filter(ThreadInfo threadInfo, Map<String, ThreadInfo> threadMap) {
         // todo filter uninteresting posts
         threadMap.put(threadInfo.getThreadID(), threadInfo);
-
     }
 
     private int calculateAvgViews(Map<String, ThreadInfo> threadMap) {
@@ -104,7 +117,7 @@ public class Scraper {
         List<Integer> votes = new ArrayList<>();
         threadMap.values().forEach(threadInfo -> votes.add(threadInfo.getVotesInt()));
         votes.sort(Integer::compareTo);
-        System.out.println(Arrays.toString(votes.toArray()));
+//        System.out.println(Arrays.toString(votes.toArray()));
         return votes.get(votes.size() / 2);
     }
 
