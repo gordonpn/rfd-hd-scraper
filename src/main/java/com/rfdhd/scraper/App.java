@@ -8,12 +8,11 @@ import java.util.Map;
 
 public class App {
 
-
     public static void main(String[] args) {
         // todo move this hardcoded parameter into a config file to read from
         Scraper scraper = new Scraper(10);
-        Map<String, ThreadInfo> threadInfoMap = new HashMap<>();
+        Map<String, ThreadInfo> rawThreadsMap = new HashMap<>();
 
-        threadInfoMap = scraper.getThreadsMap();
+        rawThreadsMap = scraper.getThreadsMap();
     }
 }

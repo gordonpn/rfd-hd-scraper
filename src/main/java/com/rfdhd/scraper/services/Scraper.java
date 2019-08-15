@@ -1,5 +1,7 @@
 package com.rfdhd.scraper.services;
 
+import com.google.common.base.Predicates;
+import com.google.common.collect.Iterables;
 import com.rfdhd.scraper.model.ThreadInfo;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -8,7 +10,9 @@ import org.jsoup.select.Elements;
 import org.pmw.tinylog.Logger;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 public class Scraper {
 
@@ -25,7 +29,8 @@ public class Scraper {
         if (threads == null) {
             threads = scrape();
         }
-        threads.remove(null);
+
+        Iterables.removeIf(threads.keySet(), Predicates.isNull());
         return threads;
     }
 
@@ -98,27 +103,7 @@ public class Scraper {
         return threadsMap;
     }
 
-    private void filter(ThreadInfo threadInfo, Map<String, ThreadInfo> threadMap) {
-        // todo filter uninteresting posts
-        threadMap.put(threadInfo.getThreadID(), threadInfo);
+    public Map<String, ThreadInfo> filter(Map<String, ThreadInfo> threadsMap) {
+        return threadsMap;
     }
-
-    private int calculateAvgViews(Map<String, ThreadInfo> threadMap) {
-        int sum = threadMap.values().stream().mapToInt(ThreadInfo::getViewsInt).sum();
-        return sum / threadMap.size();
-    }
-
-    private int calculateAvgPosts(Map<String, ThreadInfo> threadMap) {
-        int sum = threadMap.values().stream().mapToInt(ThreadInfo::getPostsInt).sum();
-        return sum / threadMap.size();
-    }
-
-    private int calculateMedianVotes(Map<String, ThreadInfo> threadMap) {
-        List<Integer> votes = new ArrayList<>();
-        threadMap.values().forEach(threadInfo -> votes.add(threadInfo.getVotesInt()));
-        votes.sort(Integer::compareTo);
-//        System.out.println(Arrays.toString(votes.toArray()));
-        return votes.get(votes.size() / 2);
-    }
-
 }
