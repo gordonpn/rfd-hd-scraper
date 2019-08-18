@@ -1,19 +1,30 @@
 package com.rfdhd.scraper.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class ThreadInfo {
 
+    @SerializedName("ThreadID")
+    @Expose
     String threadID;
-
+    @SerializedName("Title")
+    @Expose
     String topicTitle;
-
+    @SerializedName("Link")
+    @Expose
     String link;
-
+    @SerializedName("Posts")
+    @Expose
     String posts;
-
+    @SerializedName("Votes")
+    @Expose
     String votes;
-
+    @SerializedName("Views")
+    @Expose
     String views;
-
+    @SerializedName("Category")
+    @Expose
     String threadCategory;
 
     public ThreadInfo() {

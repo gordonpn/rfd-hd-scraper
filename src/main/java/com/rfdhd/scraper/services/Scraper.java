@@ -3,6 +3,7 @@ package com.rfdhd.scraper.services;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
 import com.rfdhd.scraper.model.ThreadInfo;
+import com.rfdhd.scraper.utility.Calculate;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -104,6 +105,10 @@ public class Scraper {
     }
 
     public Map<String, ThreadInfo> filter(Map<String, ThreadInfo> threadsMap) {
+        int votesThreshold = Calculate.POSTS.getMedian(threadsMap);
+
+        threadsMap.values().removeIf(threadInfo -> threadInfo.getVotesInt() < votesThreshold);
+
         return threadsMap;
     }
 }
