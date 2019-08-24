@@ -14,7 +14,7 @@ public class App {
 
     public static void main(String[] args) {
         // todo move this hardcoded parameter into a config file to read from
-        Scraper scraper = new Scraper(10);
+        Scraper scraper = new Scraper(1);
         GsonIO gsonIO = new GsonIO();
 
         Map<String, ThreadInfo> rawThreadsMap;
@@ -24,6 +24,7 @@ public class App {
         gsonIO.write(SCRAPINGS_JSON, rawThreadsMap);
 
         filteredThreads = scraper.filter(rawThreadsMap);
+        scraper.getDirectLinks(filteredThreads);
         gsonIO.write(CURRENT_LINKS, filteredThreads);
     }
 }

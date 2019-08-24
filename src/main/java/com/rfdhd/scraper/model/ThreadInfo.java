@@ -11,9 +11,12 @@ public class ThreadInfo {
     @SerializedName("Title")
     @Expose
     String topicTitle;
-    @SerializedName("Link")
+    @SerializedName("Forum link")
     @Expose
     String link;
+    @SerializedName("Direct Link")
+    @Expose
+    String directLink;
     @SerializedName("Posts")
     @Expose
     String posts;
@@ -56,6 +59,14 @@ public class ThreadInfo {
 
     public void setLink(String value) {
         this.link = value;
+    }
+
+    public String getDirectLink() {
+        return directLink;
+    }
+
+    public void setDirectLink(String directLink) {
+        this.directLink = directLink;
     }
 
     public String getPosts() {
