@@ -105,6 +105,21 @@
                     <artifactId>maven-project-info-reports-plugin</artifactId>
                     <version>3.0.0</version>
                 </plugin>
+                <plugin>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <configuration>
+                        <finalName>ServiceCreate</finalName>
+                        <appendAssemblyId>false</appendAssemblyId>
+                        <archive>
+                            <manifest>
+                                <mainClass>com.rfdhd.scraper.App</mainClass>
+                            </manifest>
+                        </archive>
+                        <descriptorRefs>
+                            <descriptorRef>jar-with-dependencies</descriptorRef>
+                        </descriptorRefs>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
