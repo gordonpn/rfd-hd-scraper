@@ -6,10 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import com.rfdhd.scraper.model.ThreadInfo;
 import org.pmw.tinylog.Logger;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,6 +59,14 @@ public class GsonIO {
             fileReader.close();
         } catch (FileNotFoundException e) {
             Logger.error("Could not open file. | " + e.getMessage());
+            Logger.info("Creating the file.");
+            File file = new File(filepath);
+            try {
+                file.getParentFile().mkdirs();
+                file.createNewFile();
+            } catch (IOException ex) {
+                Logger.error("Could not create new file. | " + ex.getMessage());
+            }
         } catch (IOException e) {
             Logger.error("Error with reader. | " + e.getMessage());
         }
