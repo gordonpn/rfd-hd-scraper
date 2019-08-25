@@ -13,8 +13,7 @@ public class App {
     private final static String PAST_LINKS = "target/resources/pastLinks.json";
 
     public static void main(String[] args) {
-        // todo move this hardcoded parameter into a config file to read from
-        Scraper scraper = new Scraper(1);
+        Scraper scraper = new Scraper(10);
         GsonIO gsonIO = new GsonIO();
 
         Map<String, ThreadInfo> rawThreadsMap;
