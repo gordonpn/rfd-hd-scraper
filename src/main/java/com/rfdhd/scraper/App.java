@@ -8,9 +8,9 @@ import java.util.Map;
 
 public class App {
 
-    private final static String SCRAPINGS_JSON = "./target/resources/scrapings.json";
-    private final static String CURRENT_LINKS = "./target/resources/currentLinks.json";
-    private final static String PAST_LINKS = "./target/resources/pastLinks.json";
+    private final static String SCRAPINGS_JSON = "./scrapings.json";
+    private final static String CURRENT_LINKS = "./currentLinks.json";
+    private final static String PAST_LINKS = "./pastLinks.json";
 
     public static void main(String[] args) {
         Scraper scraper = new Scraper(10);
