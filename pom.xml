@@ -145,6 +145,7 @@
                                 <descriptorRefs>
                                     <descriptorRef>jar-with-dependencies</descriptorRef>
                                 </descriptorRefs>
+                                <appendAssemblyId>false</appendAssemblyId>
                             </configuration>
                         </execution>
                     </executions>
@@ -154,7 +155,6 @@
         <plugins>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.1.1</version>
                 <executions>
                     <execution>
                         <id>make-assembly</id>
@@ -171,6 +171,7 @@
                             <descriptorRefs>
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
+                            <appendAssemblyId>false</appendAssemblyId>
                         </configuration>
                     </execution>
                 </executions>
