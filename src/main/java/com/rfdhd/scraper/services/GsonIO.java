@@ -59,9 +59,9 @@ public class GsonIO {
             fileReader.close();
         } catch (FileNotFoundException e) {
             Logger.error("Could not open file. | " + e.getMessage());
-            Logger.info("Creating the file.");
             File file = new File(filepath);
             try {
+                Logger.info("Creating " + filepath);
                 file.getParentFile().mkdirs();
                 file.createNewFile();
             } catch (IOException ex) {
