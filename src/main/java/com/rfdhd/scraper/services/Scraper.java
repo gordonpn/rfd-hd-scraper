@@ -128,6 +128,7 @@ public class Scraper {
                 threadPage = Optional.ofNullable(Jsoup.connect(url).get());
             } catch (IOException e) {
                 Logger.error("Could not connect to link | " + e.getMessage());
+                threadPage = Optional.empty();
             }
             threadPage.ifPresent(page -> {
                 Elements dealLinkElement = page.getElementsByClass("deal_link");
