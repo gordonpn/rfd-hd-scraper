@@ -7,28 +7,28 @@ public class ThreadInfo {
 
     @SerializedName("ThreadID")
     @Expose
-    String threadID;
+    private String threadID;
     @SerializedName("Title")
     @Expose
-    String topicTitle;
+    private String topicTitle;
     @SerializedName("Forum link")
     @Expose
-    String link;
+    private String link;
     @SerializedName("Direct Link")
     @Expose
-    String directLink;
+    private String directLink;
     @SerializedName("Posts")
     @Expose
-    String posts;
+    private String posts;
     @SerializedName("Votes")
     @Expose
-    String votes;
+    private String votes;
     @SerializedName("Views")
     @Expose
-    String views;
+    private String views;
     @SerializedName("Category")
     @Expose
-    String threadCategory;
+    private String threadCategory;
 
     public ThreadInfo() {
     }

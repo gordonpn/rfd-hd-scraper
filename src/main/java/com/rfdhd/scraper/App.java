@@ -8,9 +8,11 @@ import java.util.Map;
 
 public class App {
 
-    private final static String SCRAPINGS_JSON = "target/resources/scrapings.json";
-    private final static String CURRENT_LINKS = "target/resources/currentLinks.json";
-    private final static String PAST_LINKS = "target/resources/pastLinks.json";
+    // move this to configuration as well maybe
+    private final static String RESOURCES = "target/resources/";
+    private final static String SCRAPINGS_JSON = RESOURCES + "scrapings.json";
+    private final static String CURRENT_LINKS = RESOURCES + "currentLinks.json";
+    private final static String PAST_LINKS = RESOURCES + "pastLinks.json";
 
     public static void main(String[] args) {
         // todo move this hardcoded parameter into a config file to read from

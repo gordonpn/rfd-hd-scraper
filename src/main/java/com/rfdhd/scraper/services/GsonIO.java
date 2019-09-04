@@ -21,12 +21,10 @@ public class GsonIO {
     public void write(String filepath, Map<String, ThreadInfo> newMap) {
         Map<String, ThreadInfo> currentMap = newMap;
         Map<String, ThreadInfo> mapToAppend = read(filepath, newMap);
-        FileWriter fileWriter = null;
 
         currentMap.putAll(mapToAppend);
 
-        try {
-            fileWriter = new FileWriter(filepath);
+        try (FileWriter fileWriter = new FileWriter(filepath);) {
 
             Logger.info("Writing " + filepath);
             gsonWriter.toJson(currentMap, fileWriter);
@@ -41,10 +39,8 @@ public class GsonIO {
 
     private Map<String, ThreadInfo> read(String filepath, Map<String, ThreadInfo> newMap) {
         Map mapFromJson = new HashMap<String, ThreadInfo>();
-        FileReader fileReader = null;
 
-        try {
-            fileReader = new FileReader(filepath);
+        try (FileReader fileReader = new FileReader(filepath)) {
 
             Logger.info("Reading " + filepath);
             Type type = new TypeToken<Map<String, ThreadInfo>>() {
