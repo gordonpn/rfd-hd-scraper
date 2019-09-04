@@ -9,6 +9,7 @@ import java.util.Map;
 public class App {
 
     // move this to configuration as well maybe
+    // in prod change RESOURCES for "./"
     private final static String RESOURCES = "target/resources/";
     private final static String SCRAPINGS_JSON = RESOURCES + "scrapings.json";
     private final static String CURRENT_LINKS = RESOURCES + "currentLinks.json";

@@ -1,0 +1,10 @@
+{
+  "prodMachine": {
+    "rootFolder": "./",
+    "pages": 10
+  },
+  "testMachine": {
+    "rootFolder": "target/resources/",
+    "pages": 1
+  }
+}
