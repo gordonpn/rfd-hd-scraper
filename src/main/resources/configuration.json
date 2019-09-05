@@ -1,9 +1,9 @@
 {
-  "prodMachine": {
+  "ProdConfiguration": {
     "rootFolder": "./",
     "pages": 10
   },
-  "testMachine": {
+  "TestConfiguration": {
     "rootFolder": "target/resources/",
     "pages": 1
   }
