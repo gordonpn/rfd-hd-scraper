@@ -1,4 +1,4 @@
-package com.rfdhd.scraper.model;
+package com.rfdhd.scraper.model.configuration;
 
 public class JsonConfiguration {
 
