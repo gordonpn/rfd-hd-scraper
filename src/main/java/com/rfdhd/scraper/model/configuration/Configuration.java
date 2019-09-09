@@ -1,9 +1,17 @@
 package com.rfdhd.scraper.model.configuration;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Configuration {
 
-    String rootFolder;
-    int pages;
+    @SerializedName("rootFolder")
+    @Expose
+    private String rootFolder;
+
+    @SerializedName("pages")
+    @Expose
+    private int pages;
 
     public String getRootFolder() {
         return rootFolder;
