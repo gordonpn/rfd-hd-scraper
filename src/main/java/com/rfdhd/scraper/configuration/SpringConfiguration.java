@@ -1,5 +1,6 @@
 package com.rfdhd.scraper.configuration;
 
+import com.rfdhd.scraper.model.FilePaths;
 import com.rfdhd.scraper.model.NoConfigurationException;
 import com.rfdhd.scraper.model.configuration.Configuration;
 import org.pmw.tinylog.Logger;
@@ -23,10 +24,28 @@ public class SpringConfiguration {
                 Logger.error("Exiting app.");
                 System.exit(1);
             }
-            // why is this null?
             return configuration;
         }
 
         return configuration;
+    }
+
+    @Bean
+    FilePaths getFilePaths() {
+        configuration = getConfiguration();
+        String rootFolder = configuration.getRootFolder();
+
+        FilePaths filePaths = new FilePaths();
+
+        // todo get rid of this hardcoding
+        filePaths.setScrapingsJson(rootFolder + "scrapings.json");
+        filePaths.setCurrentLinks(rootFolder + "currentLinks.json");
+        filePaths.setPastLinks(rootFolder + "pastLinks.json");
+
+        Logger.info("Setting scrapingsJson to: " + filePaths.getScrapingsJson());
+        Logger.info("Setting currentLinks to: " + filePaths.getCurrentLinks());
+        Logger.info("Settings pastLinks to: " + filePaths.getPastLinks());
+
+        return filePaths;
     }
 }
