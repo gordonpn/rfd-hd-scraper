@@ -37,7 +37,6 @@ public class SpringConfiguration {
 
         FilePaths filePaths = new FilePaths();
 
-        // todo get rid of this hardcoding
         filePaths.setScrapingsJson(rootFolder + "scrapings.json");
         filePaths.setCurrentLinks(rootFolder + "currentLinks.json");
         filePaths.setPastLinks(rootFolder + "pastLinks.json");
