@@ -79,6 +79,7 @@ public class GsonIO {
 
         Map<String, ThreadInfo> mapFrom = read(filePathFrom, new HashMap<String, ThreadInfo>());
 
+        Logger.info("Adding contents of " + filePathFrom + " to " + filePathTo);
         add(filePathTo, mapFrom);
 
         fileFrom.delete();
@@ -87,6 +88,7 @@ public class GsonIO {
     public Map<String, ThreadInfo> removeDuplicates(Map<String, ThreadInfo> mapGiven, String filePathCompareWith) {
         Map<String, ThreadInfo> mapCompareWith = read(filePathCompareWith, new HashMap<String, ThreadInfo>());
 
+        Logger.info("Remove duplicates found in map when comparing with " + filePathCompareWith);
         mapCompareWith.keySet().forEach(mapGiven::remove);
 
         return mapGiven;
