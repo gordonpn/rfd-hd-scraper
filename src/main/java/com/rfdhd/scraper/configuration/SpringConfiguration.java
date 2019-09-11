@@ -3,9 +3,14 @@ package com.rfdhd.scraper.configuration;
 import com.rfdhd.scraper.model.FilePaths;
 import com.rfdhd.scraper.model.NoConfigurationException;
 import com.rfdhd.scraper.model.configuration.Configuration;
+import com.rfdhd.scraper.model.configuration.EmailSettings;
 import com.rfdhd.scraper.services.Scraper;
 import org.pmw.tinylog.Logger;
 import org.springframework.context.annotation.Bean;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+
+import java.util.Properties;
 
 @org.springframework.context.annotation.Configuration
 public class SpringConfiguration {
@@ -56,6 +61,28 @@ public class SpringConfiguration {
         return new Scraper(configuration.getPages());
     }
 
-//    spring.mail.properties.mail.smtp.auth=true
-//    spring.mail.properties.mail.smtp.starttls.enable=true
+    @Bean
+    JavaMailSender getJavaMailSender() {
+        configuration = getConfiguration();
+        EmailSettings emailSettings = configuration.getEmailSettings();
+
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost(emailSettings.getHost());
+        mailSender.setPort(emailSettings.getPort());
+        mailSender.setProtocol(emailSettings.getProtocol());
+
+        mailSender.setUsername("my.gmail@gmail.com");
+        mailSender.setPassword("password");
+
+        Properties props = new Properties();
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.debug", "true");
+        props.put("mail.smtp.timeout", 5000);
+        props.put("mail.smtp.connectiontimeout", 5000);
+        mailSender.setJavaMailProperties(props);
+
+        return mailSender;
+    }
 }
