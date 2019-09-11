@@ -3,6 +3,7 @@ package com.rfdhd.scraper.configuration;
 import com.rfdhd.scraper.model.FilePaths;
 import com.rfdhd.scraper.model.NoConfigurationException;
 import com.rfdhd.scraper.model.configuration.Configuration;
+import com.rfdhd.scraper.services.Scraper;
 import org.pmw.tinylog.Logger;
 import org.springframework.context.annotation.Bean;
 
@@ -46,6 +47,13 @@ public class SpringConfiguration {
         Logger.info("Settings archiveJson to: " + filePaths.getArchiveJson());
 
         return filePaths;
+    }
+
+    @Bean
+    Scraper getScraper() {
+        configuration = getConfiguration();
+
+        return new Scraper(configuration.getPages());
     }
 
     /*spring.mail.properties.mail.smtp.auth=true

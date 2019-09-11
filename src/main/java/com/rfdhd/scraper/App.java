@@ -17,8 +17,8 @@ public class App {
         ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfiguration.class);
         Configuration configuration = context.getBean(Configuration.class);
         FilePaths filePaths = context.getBean(FilePaths.class);
+        Scraper scraper = context.getBean(Scraper.class);
 
-        Scraper scraper = new Scraper(configuration.getPages());
         GsonIO gsonIO = new GsonIO();
 
         Map<String, ThreadInfo> rawThreadsMap;
