@@ -56,6 +56,6 @@ public class SpringConfiguration {
         return new Scraper(configuration.getPages());
     }
 
-    /*spring.mail.properties.mail.smtp.auth=true
-spring.mail.properties.mail.smtp.starttls.enable=true*/
+//    spring.mail.properties.mail.smtp.auth=true
+//    spring.mail.properties.mail.smtp.starttls.enable=true
 }

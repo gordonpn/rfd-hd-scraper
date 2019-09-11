@@ -13,10 +13,10 @@ import java.util.Map;
 
 public class GsonIO {
 
-    public void add(String filepath, Map<String, ThreadInfo> newMap) {
+    public void add(String filepath, Map<String, ThreadInfo> fromThisMap) {
         Gson gsonWriter = new GsonBuilder().setPrettyPrinting().create();
-        Map<String, ThreadInfo> currentMap = newMap;
-        Map<String, ThreadInfo> mapToAppend = read(filepath, newMap);
+        Map<String, ThreadInfo> currentMap = fromThisMap;
+        Map<String, ThreadInfo> mapToAppend = read(filepath, fromThisMap);
 
         currentMap.putAll(mapToAppend);
 
@@ -72,5 +72,23 @@ public class GsonIO {
         }
 
         return newMap;
+    }
+
+    public void move(String filePathFrom, String filePathTo) {
+        File fileFrom = new File(filePathFrom);
+
+        Map<String, ThreadInfo> mapFrom = read(filePathFrom, new HashMap<String, ThreadInfo>());
+
+        add(filePathTo, mapFrom);
+
+        fileFrom.delete();
+    }
+
+    public Map<String, ThreadInfo> removeDuplicates(Map<String, ThreadInfo> mapGiven, String filePathCompareWith) {
+        Map<String, ThreadInfo> mapCompareWith = read(filePathCompareWith, new HashMap<String, ThreadInfo>());
+
+        mapCompareWith.keySet().forEach(mapGiven::remove);
+
+        return mapGiven;
     }
 }
