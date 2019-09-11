@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class GsonIO {
 
-    public void write(String filepath, Map<String, ThreadInfo> newMap) {
+    public void add(String filepath, Map<String, ThreadInfo> newMap) {
         Gson gsonWriter = new GsonBuilder().setPrettyPrinting().create();
         Map<String, ThreadInfo> currentMap = newMap;
         Map<String, ThreadInfo> mapToAppend = read(filepath, newMap);

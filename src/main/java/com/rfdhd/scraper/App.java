@@ -25,10 +25,10 @@ public class App {
         Map<String, ThreadInfo> filteredThreads;
 
         rawThreadsMap = scraper.getThreadsMap();
-        gsonIO.write(filePaths.getScrapingsJson(), rawThreadsMap);
+        gsonIO.add(filePaths.getScrapingsJson(), rawThreadsMap);
 
         filteredThreads = scraper.filter(rawThreadsMap);
         scraper.getDirectLinks(filteredThreads);
-        gsonIO.write(filePaths.getCurrentLinks(), filteredThreads);
+        gsonIO.add(filePaths.getCurrentLinks(), filteredThreads);
     }
 }

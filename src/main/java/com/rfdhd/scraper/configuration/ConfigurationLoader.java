@@ -7,7 +7,6 @@ import com.rfdhd.scraper.model.configuration.Configuration;
 import com.rfdhd.scraper.model.configuration.JsonConfiguration;
 import org.pmw.tinylog.Logger;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -15,8 +14,9 @@ import java.lang.reflect.Type;
 public class ConfigurationLoader {
 
     public Configuration loadConfiguration() throws NoConfigurationException {
+        String filePath = getConfigFilePath();
 
-        try (FileReader fileReader = new FileReader("src/main/resources/configuration.json")) {
+        try (FileReader fileReader = new FileReader(filePath)) {
             Type type = new TypeToken<JsonConfiguration>() {
             }.getType();
             JsonConfiguration jsonConfiguration = new Gson().fromJson(fileReader, type);
@@ -35,13 +35,31 @@ public class ConfigurationLoader {
             } else {
                 throw new NoConfigurationException("Cannot determine machine.");
             }
-        } catch (FileNotFoundException e) {
-            Logger.error(e.getMessage());
         } catch (IOException e) {
-            Logger.error(e.getMessage());
+            Logger.error("Error getting configuration | " + e.getMessage());
         }
 
         throw new NoConfigurationException("Could not find a configuration.");
+    }
+
+    private String getConfigFilePath() throws NoConfigurationException {
+        String filePath = "";
+
+        if (isProdMachine()) {
+
+            filePath = "./configuration.json";
+            Logger.info("Configuration found in: " + filePath);
+            return filePath;
+
+        } else if (isTestMachine()) {
+
+            filePath = "src/main/resources/configuration.json";
+            Logger.info("Configuration found in: " + filePath);
+            return filePath;
+
+        }
+
+        throw new NoConfigurationException("Could not find configuration file.");
     }
 
     private boolean isTestMachine() {
