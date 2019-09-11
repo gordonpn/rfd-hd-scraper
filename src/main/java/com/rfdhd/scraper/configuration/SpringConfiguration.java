@@ -38,13 +38,16 @@ public class SpringConfiguration {
         FilePaths filePaths = new FilePaths();
 
         filePaths.setScrapingsJson(rootFolder + "scrapings.json");
-        filePaths.setCurrentLinks(rootFolder + "currentLinks.json");
-        filePaths.setPastLinks(rootFolder + "pastLinks.json");
+        filePaths.setDailyDigestJson(rootFolder + "dailyDigest.json");
+        filePaths.setArchiveJson(rootFolder + "archive.json");
 
         Logger.info("Setting scrapingsJson to: " + filePaths.getScrapingsJson());
-        Logger.info("Setting currentLinks to: " + filePaths.getCurrentLinks());
-        Logger.info("Settings pastLinks to: " + filePaths.getPastLinks());
+        Logger.info("Setting dailyDigestJson to: " + filePaths.getDailyDigestJson());
+        Logger.info("Settings archiveJson to: " + filePaths.getArchiveJson());
 
         return filePaths;
     }
+
+    /*spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true*/
 }

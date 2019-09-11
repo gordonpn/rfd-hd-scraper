@@ -3,8 +3,8 @@ package com.rfdhd.scraper.model;
 public class FilePaths {
 
     private String scrapingsJson;
-    private String currentLinks;
-    private String pastLinks;
+    private String dailyDigestJson;
+    private String archiveJson;
 
     public String getScrapingsJson() {
         return scrapingsJson;
@@ -14,19 +14,19 @@ public class FilePaths {
         this.scrapingsJson = scrapingsJson;
     }
 
-    public String getCurrentLinks() {
-        return currentLinks;
+    public String getDailyDigestJson() {
+        return dailyDigestJson;
     }
 
-    public void setCurrentLinks(String currentLinks) {
-        this.currentLinks = currentLinks;
+    public void setDailyDigestJson(String dailyDigestJson) {
+        this.dailyDigestJson = dailyDigestJson;
     }
 
-    public String getPastLinks() {
-        return pastLinks;
+    public String getArchiveJson() {
+        return archiveJson;
     }
 
-    public void setPastLinks(String pastLinks) {
-        this.pastLinks = pastLinks;
+    public void setArchiveJson(String archiveJson) {
+        this.archiveJson = archiveJson;
     }
 }

@@ -29,6 +29,6 @@ public class App {
 
         filteredThreads = scraper.filter(rawThreadsMap);
         scraper.getDirectLinks(filteredThreads);
-        gsonIO.add(filePaths.getCurrentLinks(), filteredThreads);
+        gsonIO.add(filePaths.getDailyDigestJson(), filteredThreads);
     }
 }
