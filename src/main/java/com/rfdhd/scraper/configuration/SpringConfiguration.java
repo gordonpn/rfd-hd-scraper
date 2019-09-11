@@ -4,11 +4,16 @@ import com.rfdhd.scraper.model.FilePaths;
 import com.rfdhd.scraper.model.NoConfigurationException;
 import com.rfdhd.scraper.model.configuration.Configuration;
 import com.rfdhd.scraper.model.configuration.EmailSettings;
+import com.rfdhd.scraper.services.MailContentBuilder;
 import com.rfdhd.scraper.services.Scraper;
 import org.pmw.tinylog.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import java.util.Properties;
 
@@ -71,7 +76,7 @@ public class SpringConfiguration {
         mailSender.setPort(emailSettings.getPort());
         mailSender.setProtocol(emailSettings.getProtocol());
 
-        mailSender.setUsername("my.gmail@gmail.com");
+        mailSender.setUsername("gordon.pn6@gmail.com");
         mailSender.setPassword("password");
 
         Properties props = new Properties();
@@ -85,4 +90,31 @@ public class SpringConfiguration {
 
         return mailSender;
     }
+
+    @Bean
+    MailContentBuilder getMailContentBuilder() {
+
+        return new MailContentBuilder(getTemplateEngine());
+    }
+
+    private TemplateEngine getTemplateEngine() {
+        TemplateEngine templateEngine = new TemplateEngine();
+        templateEngine.addTemplateResolver(getHtmlTemplateResolver());
+
+        return templateEngine;
+    }
+
+    private ITemplateResolver getHtmlTemplateResolver() {
+        ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
+        resolver.setPrefix("thymeleaf/");
+        resolver.setSuffix(".html");
+        resolver.setTemplateMode(TemplateMode.HTML);
+        resolver.setCharacterEncoding("UTF8");
+        resolver.setCheckExistence(true);
+        resolver.setCacheable(false);
+
+        return resolver;
+    }
+
+
 }
