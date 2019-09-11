@@ -33,7 +33,7 @@ public class GsonIO {
         }
     }
 
-    private Map<String, ThreadInfo> read(String filepath, Map<String, ThreadInfo> newMap) {
+    public Map<String, ThreadInfo> read(String filepath, Map<String, ThreadInfo> newMap) {
         Map mapFromJson = new HashMap<String, ThreadInfo>();
 
         try (FileReader fileReader = new FileReader(filepath)) {
@@ -43,6 +43,11 @@ public class GsonIO {
             }.getType();
             mapFromJson = new Gson().fromJson(fileReader, type);
             Logger.info("Succesfully read from " + filepath);
+
+            if (newMap.isEmpty()) {
+                newMap.putAll(mapFromJson);
+                return newMap;
+            }
 
             if (mapFromJson != null) {
                 Logger.info("Size of " + filepath + " is " + mapFromJson.size());

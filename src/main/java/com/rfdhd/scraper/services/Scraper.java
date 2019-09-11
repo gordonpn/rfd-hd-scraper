@@ -119,6 +119,18 @@ public class Scraper {
         return threadsMap;
     }
 
+    public Map<String, ThreadInfo> filter(Map<String, ThreadInfo> threadsMap, String filePath) {
+        GsonIO gsonIO = new GsonIO();
+
+        Map<String, ThreadInfo> mapFromJson = gsonIO.read(filePath, new HashMap<String, ThreadInfo>());
+        int votesThreshold = Calculate.POSTS.getMedian(mapFromJson);
+
+        Logger.info("Filtering threads based on " + filePath);
+        threadsMap.values().removeIf(threadInfo -> threadInfo.getVotesInt() < votesThreshold);
+
+        return threadsMap;
+    }
+
     public void getDirectLinks(Map<String, ThreadInfo> map) {
         map.forEach((id, thread) -> {
             Logger.info("Getting direct link for thread ID: " + thread.getThreadID());
