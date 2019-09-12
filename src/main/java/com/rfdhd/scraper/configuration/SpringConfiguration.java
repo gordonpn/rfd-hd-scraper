@@ -12,10 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.templatemode.TemplateMode;
-import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
-import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import java.util.Properties;
 
@@ -57,12 +53,10 @@ public class SpringConfiguration {
         filePaths.setScrapingsJson(rootFolder + "scrapings.json");
         filePaths.setDailyDigestJson(rootFolder + "dailyDigest.json");
         filePaths.setArchiveJson(rootFolder + "archive.json");
-        filePaths.setTemplateHtml(rootFolder + "thymeleaf/");
 
         Logger.info("Setting scrapingsJson to: " + filePaths.getScrapingsJson());
         Logger.info("Setting dailyDigestJson to: " + filePaths.getDailyDigestJson());
         Logger.info("Setting archiveJson to: " + filePaths.getArchiveJson());
-        Logger.info("Setting email template to: " + filePaths.getTemplateHtml());
 
         return filePaths;
     }
@@ -99,25 +93,5 @@ public class SpringConfiguration {
 
         return mailSender;
     }
-
-    private TemplateEngine getTemplateEngine() {
-        TemplateEngine templateEngine = new TemplateEngine();
-        templateEngine.addTemplateResolver(getHtmlTemplateResolver());
-
-        return templateEngine;
-    }
-
-    private ITemplateResolver getHtmlTemplateResolver() {
-        ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
-        resolver.setPrefix("thymeleaf/");
-        resolver.setSuffix(".html");
-        resolver.setTemplateMode(TemplateMode.HTML);
-        resolver.setCharacterEncoding("UTF8");
-        resolver.setCheckExistence(true);
-        resolver.setCacheable(false);
-
-        return resolver;
-    }
-
 
 }

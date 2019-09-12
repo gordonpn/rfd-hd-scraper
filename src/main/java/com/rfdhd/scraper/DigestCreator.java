@@ -29,9 +29,9 @@ public class DigestCreator {
         Map<String, ThreadInfo> dailyDigestMap;
 
         dailyDigestMap = gsonIO.read(filePaths.getDailyDigestJson(), new HashMap<>());
-//        gsonIO.move(filePaths.getDailyDigestJson(), filePaths.getArchiveJson());
+        gsonIO.move(filePaths.getDailyDigestJson(), filePaths.getArchiveJson());
 
-        if (!dailyDigestMap.isEmpty()) {
+        if (dailyDigestMap != null) {
             MailClient mailClient = new MailClient(mailSender);
             DailyDigestEmailContent emailContent = new DailyDigestEmailContent(filePaths, dailyDigestMap);
             ContentBuilder contentBuilder = new ContentBuilder(emailContent);

@@ -26,7 +26,7 @@ public class DailyDigestEmailContent implements EmailContent {
 
     @Override
     public String getTemplate() {
-        return filePaths.getTemplateHtml() + "daily-digest-template.html";
+        return "daily-digest-template.html";
     }
 
     @Override
@@ -37,7 +37,6 @@ public class DailyDigestEmailContent implements EmailContent {
         variables.put("date", LocalDate.now());
         variables.put("values", values);
 
-        // todo fill content
         return variables;
     }
 }

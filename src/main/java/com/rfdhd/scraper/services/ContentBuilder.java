@@ -45,7 +45,7 @@ public class ContentBuilder {
     private ClassLoaderTemplateResolver getClassLoaderTemplateResolver() {
         ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
 
-        resolver.setPrefix("thymeleaf/");
+        resolver.setPrefix("/thymeleaf/");
         resolver.setSuffix(".html");
         resolver.setTemplateMode(TemplateMode.HTML);
 

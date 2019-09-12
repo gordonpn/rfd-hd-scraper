@@ -44,7 +44,9 @@ public class GsonIO {
             mapFromJson = new Gson().fromJson(fileReader, type);
             Logger.info("Succesfully read from " + filepath);
 
-            if (newMap.isEmpty()) {
+            if (mapFromJson == null) {
+                return newMap;
+            } else if (newMap.isEmpty()) {
                 newMap.putAll(mapFromJson);
                 return newMap;
             }
@@ -82,14 +84,17 @@ public class GsonIO {
         Logger.info("Adding contents of " + filePathFrom + " to " + filePathTo);
         add(filePathTo, mapFrom);
 
+        Logger.info("Deleting: " + filePathFrom);
         fileFrom.delete();
     }
 
     public Map<String, ThreadInfo> removeDuplicates(Map<String, ThreadInfo> mapGiven, String filePathCompareWith) {
         Map<String, ThreadInfo> mapCompareWith = read(filePathCompareWith, new HashMap<String, ThreadInfo>());
 
-        Logger.info("Remove duplicates found in map when comparing with " + filePathCompareWith);
-        mapCompareWith.keySet().forEach(mapGiven::remove);
+        if (!mapCompareWith.isEmpty() && !mapGiven.isEmpty()) {
+            Logger.info("Remove duplicates found in map when comparing with " + filePathCompareWith);
+            mapCompareWith.keySet().forEach(mapGiven::remove);
+        }
 
         return mapGiven;
     }
