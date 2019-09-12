@@ -2,6 +2,7 @@ package com.rfdhd.scraper.configuration;
 
 import com.rfdhd.scraper.model.FilePaths;
 import com.rfdhd.scraper.model.NoConfigurationException;
+import com.rfdhd.scraper.model.configuration.Authentication;
 import com.rfdhd.scraper.model.configuration.Configuration;
 import com.rfdhd.scraper.model.configuration.EmailSettings;
 import com.rfdhd.scraper.services.Scraper;
@@ -77,14 +78,15 @@ public class SpringConfiguration {
     JavaMailSender getJavaMailSender() {
         configuration = getConfiguration();
         EmailSettings emailSettings = configuration.getEmailSettings();
+        Authentication authentication = emailSettings.getAuthentication();
 
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost(emailSettings.getHost());
         mailSender.setPort(emailSettings.getPort());
         mailSender.setProtocol(emailSettings.getProtocol());
 
-        mailSender.setUsername("gordon.pn6@gmail.com");
-        mailSender.setPassword("password");
+        mailSender.setUsername(authentication.getUsername());
+        mailSender.setPassword(authentication.getPassword());
 
         Properties props = new Properties();
         props.put("mail.transport.protocol", "smtp");

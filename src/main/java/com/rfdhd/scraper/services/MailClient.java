@@ -1,5 +1,6 @@
 package com.rfdhd.scraper.services;
 
+import com.google.common.collect.Iterables;
 import org.pmw.tinylog.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
@@ -9,6 +10,7 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class MailClient {
@@ -21,13 +23,12 @@ public class MailClient {
         this.mailSender = javaMailSender;
     }
 
-    public void prepareAndSend(String recipient, String content) {
-        LocalDate dateToday = LocalDate.now();
+    public void prepareAndSend(List<String> recipient, String content) {
         MimeMessagePreparator mimeMessagePreparator = mimeMessage -> {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
             mimeMessageHelper.setFrom(FROM_EMAIL);
-            mimeMessageHelper.setTo(recipient);
-            mimeMessageHelper.setSubject("Deals Daily Digest - " + dateToday);
+            mimeMessageHelper.setTo(Iterables.toArray(recipient, String.class));
+            mimeMessageHelper.setSubject("Deals Daily Digest - " + LocalDate.now());
             mimeMessageHelper.setText(content, true);
         };
 

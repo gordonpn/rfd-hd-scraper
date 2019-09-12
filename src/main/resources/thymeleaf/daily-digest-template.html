@@ -1,7 +1,45 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head></head>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <style>
+        * {
+            font-family: sans-serif;
+        }
+
+        #title {
+            color: #c9383e;
+        }
+    </style>
+</head>
 <body>
-<span></span>
+<div id="title">
+    <h1 align="center">Daily Digest of Red Flag Deals of <span th:text="${date}">2019-09-12</span></h1>
+</div>
+<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable">
+    <tr>
+        <td align="center" valign="top">
+            <table border="0" cellpadding="20" cellspacing="0" width="600" id="emailContainer">
+                <tr>
+                    <td align="center" valign="top">
+                        <table border="0" cellpadding="20" cellspacing="0" width="100%" id="emailBody">
+                            <tr th:each="value : ${values}">
+                                <h2>
+                                    <a href="http://gordonpn.codes" th:href="${value.link}">
+                                        <span th:text="${value.topicTitle}">Some shit that's on sale.</span>
+                                    </a>
+                                </h2>
+                                <p>
+                                    <a href="http://google.ca" th:href="${value.directLink}">
+                                        Direct link
+                                    </a>
+                                </p>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
 </body>
 </html>

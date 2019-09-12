@@ -3,7 +3,7 @@ package com.rfdhd.scraper;
 import com.rfdhd.scraper.configuration.SpringConfiguration;
 import com.rfdhd.scraper.model.FilePaths;
 import com.rfdhd.scraper.model.configuration.Configuration;
-import com.rfdhd.scraper.report.DailyDigestEmail;
+import com.rfdhd.scraper.report.DailyDigestEmailContent;
 import com.rfdhd.scraper.services.Scraper;
 import org.pmw.tinylog.Logger;
 import org.springframework.context.ApplicationContext;
@@ -19,7 +19,7 @@ public class Testing {
         Scraper scraper = context.getBean(Scraper.class);
         JavaMailSender mailSender = context.getBean(JavaMailSender.class);
 
-        DailyDigestEmail dailyDigestEmail = new DailyDigestEmail(filePaths);
+        DailyDigestEmailContent dailyDigestEmail = new DailyDigestEmailContent(filePaths);
         Logger.info(dailyDigestEmail.getTemplate());
     }
 }
