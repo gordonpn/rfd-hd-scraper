@@ -13,6 +13,8 @@ import java.lang.reflect.Type;
 
 public class ConfigurationLoader {
 
+    private String osName = System.getProperty("os.name");
+
     public Configuration loadConfiguration() throws NoConfigurationException {
         String filePath = getConfigFilePath();
 
@@ -20,7 +22,7 @@ public class ConfigurationLoader {
             Type type = new TypeToken<JsonConfiguration>() {
             }.getType();
             JsonConfiguration jsonConfiguration = new Gson().fromJson(fileReader, type);
-            Logger.info("Parsed configuration.json succesfully.");
+            Logger.info("Parsed configuration.json successfully.");
 
             if (isProdMachine()) {
 
@@ -43,7 +45,7 @@ public class ConfigurationLoader {
     }
 
     private String getConfigFilePath() throws NoConfigurationException {
-        String filePath = "";
+        String filePath;
 
         if (isProdMachine()) {
 
@@ -63,10 +65,10 @@ public class ConfigurationLoader {
     }
 
     private boolean isTestMachine() {
-        return System.getProperty("os.name").toLowerCase().contains("mac") || System.getProperty("os.name").toLowerCase().contains("windows");
+        return osName.toLowerCase().contains("mac") || osName.toLowerCase().contains("windows");
     }
 
     private boolean isProdMachine() {
-        return System.getProperty("os.name").toLowerCase().contains("linux");
+        return osName.toLowerCase().contains("linux");
     }
 }

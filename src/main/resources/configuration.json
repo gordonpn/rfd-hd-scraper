@@ -10,8 +10,10 @@
       "host": "smtp.gmail.com",
       "port": 587,
       "protocol": "smtp",
-      "username": "${GMAIL_USERNAME}",
-      "password": "${GMAIL_PASSWORD"
+      "authentication": {
+        "username": "${GMAIL_USERNAME}",
+        "password": "${GMAIL_PASSWORD}"
+      }
     }
   },
   "TestConfiguration": {
@@ -24,8 +26,10 @@
       "host": "smtp.gmail.com",
       "port": 587,
       "protocol": "smtp",
-      "username": "${GMAIL_USERNAME}",
-      "password": "${GMAIL_PASSWORD"
+      "authentication": {
+        "username": "${GMAIL_USERNAME}",
+        "password": "${GMAIL_PASSWORD}"
+      }
     }
   }
 }

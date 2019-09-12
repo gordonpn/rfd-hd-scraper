@@ -14,12 +14,9 @@ public class EmailSettings {
     @SerializedName("protocol")
     @Expose
     private String protocol;
-    @SerializedName("username")
+    @SerializedName("authentication")
     @Expose
-    private String username;
-    @SerializedName("password")
-    @Expose
-    private String password;
+    private Authentication authentication;
 
     public String getHost() {
         return host;
@@ -45,20 +42,12 @@ public class EmailSettings {
         this.protocol = protocol;
     }
 
-    public String getUsername() {
-        return username;
+    public Authentication getAuthentication() {
+        return authentication;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setAuthentication(Authentication authentication) {
+        this.authentication = authentication;
     }
 
 }

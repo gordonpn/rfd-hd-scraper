@@ -15,23 +15,20 @@ public class MailClient {
 
     private JavaMailSender mailSender;
     private final String FROM_EMAIL = "gordon.pn6@gmail.com";
-    private final MailContentBuilder mailContentBuilder;
 
     @Autowired
-    public MailClient(JavaMailSender javaMailSender, MailContentBuilder mailContentBuilder) {
+    public MailClient(JavaMailSender javaMailSender) {
         this.mailSender = javaMailSender;
-        this.mailContentBuilder = mailContentBuilder;
     }
 
     public void prepareAndSend(String recipient, String content) {
         LocalDate dateToday = LocalDate.now();
         MimeMessagePreparator mimeMessagePreparator = mimeMessage -> {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
-            String htmlContent = mailContentBuilder.build(content);
             mimeMessageHelper.setFrom(FROM_EMAIL);
             mimeMessageHelper.setTo(recipient);
             mimeMessageHelper.setSubject("Deals Daily Digest - " + dateToday);
-            mimeMessageHelper.setText(htmlContent, true);
+            mimeMessageHelper.setText(content, true);
         };
 
         try {

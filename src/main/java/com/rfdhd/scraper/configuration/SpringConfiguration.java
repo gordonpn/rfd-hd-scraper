@@ -4,10 +4,11 @@ import com.rfdhd.scraper.model.FilePaths;
 import com.rfdhd.scraper.model.NoConfigurationException;
 import com.rfdhd.scraper.model.configuration.Configuration;
 import com.rfdhd.scraper.model.configuration.EmailSettings;
-import com.rfdhd.scraper.services.MailContentBuilder;
 import com.rfdhd.scraper.services.Scraper;
 import org.pmw.tinylog.Logger;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.thymeleaf.TemplateEngine;
@@ -17,7 +18,8 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import java.util.Properties;
 
-@org.springframework.context.annotation.Configuration
+@SpringBootApplication
+@ComponentScan("com.rfdhd.scraper")
 public class SpringConfiguration {
 
     private Configuration configuration = null;
@@ -35,6 +37,9 @@ public class SpringConfiguration {
                 Logger.error("Exiting app.");
                 System.exit(1);
             }
+
+            configuration.updateUsernameAndPassword();
+
             return configuration;
         }
 
@@ -51,10 +56,12 @@ public class SpringConfiguration {
         filePaths.setScrapingsJson(rootFolder + "scrapings.json");
         filePaths.setDailyDigestJson(rootFolder + "dailyDigest.json");
         filePaths.setArchiveJson(rootFolder + "archive.json");
+        filePaths.setTemplateHtml(rootFolder + "thymeleaf/");
 
         Logger.info("Setting scrapingsJson to: " + filePaths.getScrapingsJson());
         Logger.info("Setting dailyDigestJson to: " + filePaths.getDailyDigestJson());
-        Logger.info("Settings archiveJson to: " + filePaths.getArchiveJson());
+        Logger.info("Setting archiveJson to: " + filePaths.getArchiveJson());
+        Logger.info("Setting email template to: " + filePaths.getTemplateHtml());
 
         return filePaths;
     }
@@ -89,12 +96,6 @@ public class SpringConfiguration {
         mailSender.setJavaMailProperties(props);
 
         return mailSender;
-    }
-
-    @Bean
-    MailContentBuilder getMailContentBuilder() {
-
-        return new MailContentBuilder(getTemplateEngine());
     }
 
     private TemplateEngine getTemplateEngine() {
