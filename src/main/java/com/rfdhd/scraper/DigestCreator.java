@@ -41,6 +41,8 @@ public class DigestCreator {
                 String content = contentBuilder.getHtmlContent();
 
                 mailClient.prepareAndSend(mailingList, content);
+            } else {
+                Logger.info("dailyDigestJson did not contain anything; no email sent.");
             }
         } else {
             Logger.info("dailyDigestJson was empty; no email sent.");
