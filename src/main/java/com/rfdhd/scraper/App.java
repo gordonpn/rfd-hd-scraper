@@ -6,11 +6,13 @@ import com.rfdhd.scraper.model.ThreadInfo;
 import com.rfdhd.scraper.model.configuration.Configuration;
 import com.rfdhd.scraper.services.GsonIO;
 import com.rfdhd.scraper.services.Scraper;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.Map;
 
+@SpringBootApplication
 public class App {
 
     public static void main(String[] args) {
