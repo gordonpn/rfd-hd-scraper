@@ -29,6 +29,9 @@ public class ThreadInfo {
     @SerializedName("Category")
     @Expose
     private String threadCategory;
+    @SerializedName("Content")
+    @Expose
+    private String content;
 
     public ThreadInfo() {
     }
@@ -123,5 +126,13 @@ public class ThreadInfo {
 
     public void setThreadCategory(String value) {
         this.threadCategory = value;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

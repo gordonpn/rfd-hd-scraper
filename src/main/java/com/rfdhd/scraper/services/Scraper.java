@@ -103,6 +103,7 @@ public class Scraper {
             String link = line.getElementsByClass("topic_title_link").attr("href");
             threadInfo.setLink(prefix.concat(link));
             threadInfo.setDirectLink("");
+            threadInfo.setContent("");
         }
 
         threadsMap.put(threadInfo.getThreadID(), threadInfo);
@@ -131,7 +132,7 @@ public class Scraper {
         return threadsMap;
     }
 
-    public void getDirectLinks(Map<String, ThreadInfo> map) {
+    public void loadThreads(Map<String, ThreadInfo> map) {
         map.forEach((id, thread) -> {
             Logger.info("Getting direct link for thread ID: " + thread.getThreadID());
             String url = thread.getLink();
@@ -143,14 +144,19 @@ public class Scraper {
                 threadPage = Optional.empty();
             }
             threadPage.ifPresent(page -> {
-                Elements dealLinkElement = page.getElementsByClass("deal_link");
-                Elements aLine = dealLinkElement.select("a");
-                String affiliateUrl = aLine.attr("href");
-                Logger.info("Getting affiliate link: " + affiliateUrl);
-                String expandedUrl = expandUrl(affiliateUrl);
-                thread.setDirectLink(expandedUrl);
+                getDirectLinks(page, thread);
+                getContent(page, thread);
             });
         });
+    }
+
+    public void getDirectLinks(Document page, ThreadInfo thread) {
+        Elements dealLinkElement = page.getElementsByClass("deal_link");
+        Elements aLine = dealLinkElement.select("a");
+        String affiliateUrl = aLine.attr("href");
+        Logger.info("Getting affiliate link: " + affiliateUrl);
+        String expandedUrl = expandUrl(affiliateUrl);
+        thread.setDirectLink(expandedUrl);
     }
 
     public String expandUrl(String affiliateUrl) {
@@ -168,5 +174,18 @@ public class Scraper {
         }
         Logger.info("Got direct link: " + expandedUrl);
         return expandedUrl;
+    }
+
+    public void getContent(Document page, ThreadInfo thread) {
+        Logger.info("Getting content of thread " + thread.getThreadID());
+        Elements posts = page.select("div.content");
+        Element firstPost = posts.get(0);
+        String content = firstPost.text();
+        String patternRegex = "(?i)<br */?>";
+        content = content.replaceAll(patternRegex, " ").replaceAll("\"", "");
+        if (content.length() > 140) {
+            content = content.substring(0, 140);
+        }
+        thread.setContent(content);
     }
 }
