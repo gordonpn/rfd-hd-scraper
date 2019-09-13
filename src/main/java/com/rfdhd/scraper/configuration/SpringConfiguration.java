@@ -7,7 +7,6 @@ import com.rfdhd.scraper.model.configuration.Configuration;
 import com.rfdhd.scraper.model.configuration.EmailSettings;
 import com.rfdhd.scraper.services.Scraper;
 import org.pmw.tinylog.Logger;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -15,7 +14,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Properties;
 
-@SpringBootApplication
+@org.springframework.context.annotation.Configuration
 @ComponentScan("com.rfdhd.scraper")
 public class SpringConfiguration {
 
