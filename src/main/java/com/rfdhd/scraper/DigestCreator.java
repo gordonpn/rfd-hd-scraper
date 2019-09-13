@@ -32,14 +32,16 @@ public class DigestCreator {
         gsonIO.move(filePaths.getDailyDigestJson(), filePaths.getArchiveJson());
 
         if (dailyDigestMap != null) {
-            MailClient mailClient = new MailClient(mailSender);
-            DailyDigestEmailContent emailContent = new DailyDigestEmailContent(filePaths, dailyDigestMap);
-            ContentBuilder contentBuilder = new ContentBuilder(emailContent);
+            if (dailyDigestMap.size() > 0) {
+                MailClient mailClient = new MailClient(mailSender);
+                DailyDigestEmailContent emailContent = new DailyDigestEmailContent(filePaths, dailyDigestMap);
+                ContentBuilder contentBuilder = new ContentBuilder(emailContent);
 
-            List<String> mailingList = configuration.getMailingList();
-            String content = contentBuilder.getHtmlContent();
+                List<String> mailingList = configuration.getMailingList();
+                String content = contentBuilder.getHtmlContent();
 
-            mailClient.prepareAndSend(mailingList, content);
+                mailClient.prepareAndSend(mailingList, content);
+            }
         } else {
             Logger.info("dailyDigestJson was empty; no email sent.");
         }
