@@ -9,6 +9,14 @@
         #title {
             color: #c9383e;
         }
+
+        a {
+            color: #879eb0;
+        }
+
+        p {
+            color: #282829;
+        }
     </style>
 </head>
 <body>
@@ -28,6 +36,9 @@
                                         <span th:text="${value.topicTitle}">Some shit that's on sale.</span>
                                     </a>
                                 </h2>
+                                <p>
+                                    <span th:text="${value.content}">Short description of that shit.</span>
+                                </p>
                             </tr>
                         </table>
                     </td>

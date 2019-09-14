@@ -21,7 +21,7 @@ public class DailyDigestEmailContent implements EmailContent {
 
     @Override
     public String getReportName() {
-        return LocalDate.now() + "-DailyDigestEmail";
+        return LocalDate.now() + "-DailyDigestEmail.html";
     }
 
     @Override

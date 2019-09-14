@@ -13,9 +13,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.mail.javamail.JavaMailSender;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.rfdhd.scraper.utility.MachineChecker.isProdMachine;
 
 public class DigestCreator {
 
@@ -33,14 +36,27 @@ public class DigestCreator {
 
         if (dailyDigestMap != null) {
             if (dailyDigestMap.size() > 0) {
-                MailClient mailClient = new MailClient(mailSender);
-                DailyDigestEmailContent emailContent = new DailyDigestEmailContent(filePaths, dailyDigestMap);
-                ContentBuilder contentBuilder = new ContentBuilder(emailContent);
+                if (isProdMachine()) {
+                    MailClient mailClient = new MailClient(mailSender);
+                    DailyDigestEmailContent emailContent = new DailyDigestEmailContent(filePaths, dailyDigestMap);
+                    ContentBuilder contentBuilder = new ContentBuilder(emailContent);
 
-                List<String> mailingList = configuration.getMailingList();
-                String content = contentBuilder.getHtmlContent();
+                    List<String> mailingList = configuration.getMailingList();
+                    String content = contentBuilder.getHtmlContent();
 
-                mailClient.prepareAndSend(mailingList, content);
+                    mailClient.prepareAndSend(mailingList, content);
+
+                } else {
+
+                    DailyDigestEmailContent emailContent = new DailyDigestEmailContent(filePaths, dailyDigestMap);
+                    ContentBuilder contentBuilder = new ContentBuilder(emailContent);
+
+                    try {
+                        contentBuilder.write();
+                    } catch (IOException e) {
+                        Logger.error("Could not write email to file" + e.getMessage());
+                    }
+                }
             } else {
                 Logger.info("dailyDigestJson did not contain anything; no email sent.");
             }
