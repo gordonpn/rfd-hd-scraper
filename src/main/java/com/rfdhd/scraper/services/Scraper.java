@@ -179,13 +179,15 @@ public class Scraper {
     public void getContent(Document page, ThreadInfo thread) {
         Logger.info("Getting content of thread " + thread.getThreadID());
         Elements posts = page.select("div.content");
-        Element firstPost = posts.get(0);
-        String content = firstPost.text();
-        String patternRegex = "(?i)<br */?>";
-        content = content.replaceAll(patternRegex, " ").replaceAll("\"", "");
-        if (content.length() > 140) {
-            content = content.substring(0, 140);
+        if (posts.size() != 0) {
+            Element firstPost = posts.get(0);
+            String content = firstPost.text();
+            String patternRegex = "(?i)<br */?>";
+            content = content.replaceAll(patternRegex, " ").replaceAll("\"", "");
+            if (content.length() > 140) {
+                content = content.substring(0, 140);
+            }
+            thread.setContent(content);
         }
-        thread.setContent(content);
     }
 }
