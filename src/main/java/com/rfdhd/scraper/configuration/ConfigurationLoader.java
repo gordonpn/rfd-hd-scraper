@@ -11,9 +11,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
 
+import static com.rfdhd.scraper.utility.MachineChecker.isProdMachine;
+import static com.rfdhd.scraper.utility.MachineChecker.isTestMachine;
+
 public class ConfigurationLoader {
 
-    private String osName = System.getProperty("os.name");
 
     public Configuration loadConfiguration() throws NoConfigurationException {
         String filePath = getConfigFilePath();
@@ -62,13 +64,5 @@ public class ConfigurationLoader {
         }
 
         throw new NoConfigurationException("Could not find configuration file.");
-    }
-
-    private boolean isTestMachine() {
-        return osName.toLowerCase().contains("mac") || osName.toLowerCase().contains("windows");
-    }
-
-    private boolean isProdMachine() {
-        return osName.toLowerCase().contains("linux");
     }
 }
