@@ -51,6 +51,8 @@ java -cp *.jar com.rfdhd.scraper.DigestCreator
 ##### Phase 3
 * [x]  Add content body under h2
 * [x]  Add a good readme.md
+* [ ]  Sort descending by votes before sending email
+* [ ]  Make use of original post date and/or view/post counts when filtering
 * [ ]  Read from config and template within the jar
 * [ ]  Write tests
 * [ ]  Improve styling of email template
