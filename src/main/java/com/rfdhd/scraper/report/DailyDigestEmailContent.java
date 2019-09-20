@@ -1,22 +1,18 @@
 package com.rfdhd.scraper.report;
 
-import com.rfdhd.scraper.model.FilePaths;
 import com.rfdhd.scraper.model.ThreadInfo;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class DailyDigestEmailContent implements EmailContent {
 
-    private final FilePaths filePaths;
-    private Map<String, ThreadInfo> map;
+    private List<ThreadInfo> list;
 
-    public DailyDigestEmailContent(FilePaths filePaths, Map<String, ThreadInfo> map) {
-        this.filePaths = filePaths;
-        this.map = map;
+    public DailyDigestEmailContent(List<ThreadInfo> list) {
+        this.list = list;
     }
 
     @Override
@@ -32,10 +28,9 @@ public class DailyDigestEmailContent implements EmailContent {
     @Override
     public Map<String, Object> getContent() {
         HashMap<String, Object> variables = new HashMap<>();
-        List<ThreadInfo> values = new ArrayList(map.values());
 
         variables.put("date", LocalDate.now());
-        variables.put("values", values);
+        variables.put("values", list);
 
         return variables;
     }

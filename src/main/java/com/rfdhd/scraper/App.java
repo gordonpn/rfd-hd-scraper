@@ -32,6 +32,5 @@ public class App {
         filteredThreads = gsonIO.removeDuplicates(filteredThreads, filePaths.getArchiveJson());
         scraper.loadThreads(filteredThreads);
         gsonIO.add(filePaths.getDailyDigestJson(), filteredThreads);
-        ;
     }
 }

@@ -87,7 +87,7 @@ public class Scraper {
 
         String id = line.attr("data-thread-id");
         if (!id.equals("")) {
-            Logger.info("Parsing thread ID: " + id);
+//            Logger.info("Parsing thread ID: " + id);
             threadInfo.setThreadID(id);
             threadInfo.setPosts(line.getElementsByClass("posts").text());
             threadInfo.setViews(line.getElementsByClass("views").text());
