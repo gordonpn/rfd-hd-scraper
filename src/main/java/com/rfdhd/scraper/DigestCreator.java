@@ -49,21 +49,19 @@ public class DigestCreator {
 
         if (sortedList != null) {
             if (sortedList.size() > 0) {
-                if (isProdMachine()) {
-                    MailClient mailClient = new MailClient(mailSender);
-                    DailyDigestEmailContent emailContent = new DailyDigestEmailContent(sortedList);
-                    ContentBuilder contentBuilder = new ContentBuilder(emailContent);
 
+                DailyDigestEmailContent emailContent = new DailyDigestEmailContent(sortedList);
+                ContentBuilder contentBuilder = new ContentBuilder(emailContent);
+
+                if (isProdMachine()) {
+
+                    MailClient mailClient = new MailClient(mailSender);
                     List<String> mailingList = configuration.getMailingList();
                     String content = contentBuilder.getHtmlContent();
 
                     mailClient.prepareAndSend(mailingList, content);
 
                 } else {
-
-                    DailyDigestEmailContent emailContent = new DailyDigestEmailContent(sortedList);
-                    ContentBuilder contentBuilder = new ContentBuilder(emailContent);
-
                     try {
                         contentBuilder.write();
                     } catch (IOException e) {
