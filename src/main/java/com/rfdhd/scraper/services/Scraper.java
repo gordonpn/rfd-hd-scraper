@@ -67,7 +67,7 @@ public class Scraper {
                 return doc.get().getElementsByClass("topiclist topics with_categories");
             }
         } catch (IOException e) {
-            Logger.error(e.getMessage());
+            Logger.error("Error with scraping page | " + e.getMessage());
         }
         return null;
     }

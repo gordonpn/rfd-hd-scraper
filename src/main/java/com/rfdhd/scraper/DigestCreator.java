@@ -14,9 +14,11 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.mail.javamail.JavaMailSender;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import static com.rfdhd.scraper.utility.MachineChecker.isProdMachine;
 
@@ -33,6 +35,17 @@ public class DigestCreator {
 
         dailyDigestMap = gsonIO.read(filePaths.getDailyDigestJson(), new HashMap<>());
         gsonIO.move(filePaths.getDailyDigestJson(), filePaths.getArchiveJson());
+
+        Stream<Map.Entry<String, ThreadInfo>> sortedMap = dailyDigestMap.entrySet().stream().sorted(new Comparator<Map.Entry<String, ThreadInfo>>() {
+            @Override
+            public int compare(Map.Entry<String, ThreadInfo> o1, Map.Entry<String, ThreadInfo> o2) {
+                if (o1.getValue().getVotesInt() <= o2.getValue().getVotesInt()) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            }
+        });
 
         if (dailyDigestMap != null) {
             if (dailyDigestMap.size() > 0) {
@@ -54,7 +67,7 @@ public class DigestCreator {
                     try {
                         contentBuilder.write();
                     } catch (IOException e) {
-                        Logger.error("Could not write email to file" + e.getMessage());
+                        Logger.error("Could not write email to file | " + e.getMessage());
                     }
                 }
             } else {

@@ -29,7 +29,7 @@ public class SpringConfiguration {
                 Logger.info("Loading configuration.json");
                 configuration = configurationLoader.loadConfiguration();
             } catch (NoConfigurationException e) {
-                Logger.error(e.getMessage());
+                Logger.error("Error with loading configuration | " + e.getMessage());
                 Logger.error("Exiting app.");
                 System.exit(1);
             }

@@ -21,7 +21,8 @@ The main class "com.rfdhd.scraper.DigestCreator" is used for sending the daily d
 ```bash
 java -cp *.jar com.rfdhd.scraper.DigestCreator
 ```
-## Roadmap
+## Roadmap/Todo
+
 ##### Phase 1
 * [x]  Use the Jsoup library to scrape data correctly.
 * [x]  Save all the scraped data in a map.
