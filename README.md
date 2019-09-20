@@ -52,7 +52,10 @@ java -cp *.jar com.rfdhd.scraper.DigestCreator
 ##### Phase 3
 * [x]  Add content body under h2
 * [x]  Add a good readme.md
-* [ ]  Sort descending by votes before sending email
+* [x]  Sort descending by votes before sending email
+* [x]  Record thread start time
+* [ ]  Keep the most recent version of the scraped posts
+* [ ]  Fix logic with scrapings (threads not going to dailyDigest if it was previously scraped with a low vote score (because it was they wre already in scrapings))
 * [ ]  Make use of original post date and/or view/post counts when filtering
 * [ ]  Read from config and template within the jar
 * [ ]  Write tests
