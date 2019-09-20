@@ -22,7 +22,6 @@ import java.util.Optional;
 public class Scraper {
 
     int pages;
-
     Map<String, ThreadInfo> threads;
 
     public Scraper(int pages) {
@@ -104,6 +103,8 @@ public class Scraper {
             threadInfo.setLink(prefix.concat(link));
             threadInfo.setDirectLink("");
             threadInfo.setContent("");
+            // todo parse date into an object
+            threadInfo.setDate(line.select("span.first-post-time").text());
         }
 
         threadsMap.put(threadInfo.getThreadID(), threadInfo);
