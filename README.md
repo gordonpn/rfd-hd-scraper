@@ -56,7 +56,13 @@ java -cp *.jar com.rfdhd.scraper.DigestCreator
 * [x]  Record thread start time
 * [ ]  Keep the most recent version of the scraped posts
 * [ ]  Fix logic with scrapings (threads not going to dailyDigest if it was previously scraped with a low vote score (because it was they wre already in scrapings))
-* [ ]  Make use of original post date and/or view/post counts when filtering
+    *  To fix these two issues: 
+    *  Make use of LinkedHashMap to preserve the order of insertion. 
+    *  Try to read the existing files before scraping. And put into those existing maps, thus updating values with identical keys.
+    *  Only filter based on the median of pages scraped, not entire scrapings json.
+    *  Save the interesting threads in dailyDigest disregarding the duplicates found in scrapings. 
+    *  Only when preparing the email, remove the duplicates by comparing with archive.
+* [ ]  Filter out threads older than 72 hours when preparing email.
 * [ ]  Read from config and template within the jar
 * [ ]  Write tests
 * [ ]  Improve styling of email template
