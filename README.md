@@ -54,6 +54,7 @@ java -cp *.jar com.rfdhd.scraper.DigestCreator
 * [x]  Add a good readme.md
 * [x]  Sort descending by votes before sending email
 * [x]  Record thread start time
+* [ ]  Parse post date
 * [ ]  Keep the most recent version of the scraped posts
 * [ ]  Fix logic with scrapings (threads not going to dailyDigest if it was previously scraped with a low vote score (because it was they wre already in scrapings))
     *  To fix these two issues: 
