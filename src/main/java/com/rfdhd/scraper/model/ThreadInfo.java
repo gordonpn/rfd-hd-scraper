@@ -3,6 +3,11 @@ package com.rfdhd.scraper.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.util.Locale;
+
 public class ThreadInfo {
 
     @SerializedName("ThreadID")
@@ -145,5 +150,16 @@ public class ThreadInfo {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public LocalDateTime getLocalDateTime() {
+        date = date.replaceAll("pm", "p.m.").replaceAll("am", "a.m.");
+
+        DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+                .parseCaseInsensitive()
+                .appendPattern("LLL d['st']['nd']['rd']['th'], yyyy h:mm a")
+                .toFormatter(Locale.ENGLISH);
+
+        return LocalDateTime.parse(date, formatter);
     }
 }
