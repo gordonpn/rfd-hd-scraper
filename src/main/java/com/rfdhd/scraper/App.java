@@ -5,6 +5,7 @@ import com.rfdhd.scraper.model.FilePaths;
 import com.rfdhd.scraper.model.ThreadInfo;
 import com.rfdhd.scraper.model.configuration.Configuration;
 import com.rfdhd.scraper.services.GsonIO;
+import com.rfdhd.scraper.services.Processor;
 import com.rfdhd.scraper.services.Scraper;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -20,17 +21,21 @@ public class App {
         Scraper scraper = context.getBean(Scraper.class);
 
         GsonIO gsonIO = new GsonIO();
+        Processor process = new Processor();
 
-        Map<String, ThreadInfo> rawThreadsMap;
-        Map<String, ThreadInfo> filteredThreads;
+        Map scrapings = gsonIO.read(filePaths.getScrapingsJson());
+        Map dailyDigest = gsonIO.read(filePaths.getDailyDigestJson());
 
-        rawThreadsMap = scraper.getThreadsMap();
-        gsonIO.add(filePaths.getScrapingsJson(), rawThreadsMap);
+        Map<String, ThreadInfo> newScrapings = scraper.getThreadsMap();
 
-//        filteredThreads = scraper.filter(rawThreadsMap);
-        filteredThreads = scraper.filter(rawThreadsMap, filePaths.getScrapingsJson());
-        filteredThreads = gsonIO.removeDuplicates(filteredThreads, filePaths.getArchiveJson());
-        scraper.loadThreads(filteredThreads);
-        gsonIO.add(filePaths.getDailyDigestJson(), filteredThreads);
+        Map newDailyDigest = process.filter(newScrapings);
+
+        process.loadThreads(newDailyDigest);
+
+        scrapings.putAll(newScrapings);
+        dailyDigest.putAll(newDailyDigest);
+
+        gsonIO.write(filePaths.getScrapingsJson(), scrapings);
+        gsonIO.write(filePaths.getDailyDigestJson(), dailyDigest);
     }
 }

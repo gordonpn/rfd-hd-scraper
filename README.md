@@ -54,22 +54,22 @@ java -cp *.jar com.rfdhd.scraper.DigestCreator
 * [x]  Add a good readme.md
 * [x]  Sort descending by votes before sending email
 * [x]  Record thread start time
-* [ ]  Parse post date
-* [ ]  Keep the most recent version of the scraped posts
-* [ ]  Fix logic with scrapings (threads not going to dailyDigest if it was previously scraped with a low vote score (because it was they wre already in scrapings))
+* [x]  Parse post date
+* [x]  Keep the most recent version of the scraped posts
+* [x]  Fix logic with scrapings (threads not going to dailyDigest if it was previously scraped with a low vote score (because it was they wre already in scrapings))
     *  To fix these two issues: 
-    *  Make use of LinkedHashMap to preserve the order of insertion. 
-    *  Try to read the existing files before scraping. And put into those existing maps, thus updating values with identical keys.
-    *  Only filter based on the median of pages scraped, not entire scrapings json.
-    *  Save the interesting threads in dailyDigest disregarding the duplicates found in scrapings. 
-    *  Only when preparing the email, remove the duplicates by comparing with archive.
+        * [x]  Make use of LinkedHashMap to preserve the order of insertion. 
+        * [x]  Try to read the existing files before scraping. And put into those existing maps, thus updating values with identical keys.
+        * [x]  Only filter based on the median of pages scraped, not entire scrapings json.
+        * [x]  Save the interesting threads in dailyDigest disregarding the duplicates found in scrapings. 
+* [ ]  When preparing the email, remove the duplicates by comparing with archive.
 * [ ]  Filter out threads older than 72 hours when preparing email.
 * [ ]  Read from config and template within the jar
 * [ ]  Write tests
 * [ ]  Improve styling of email template
 
 ##### Phase 4
-* [ ]  Utilize Pushbullet API or Discord Webhook to send real-time notifications (top scraping of each hour)
+* [ ]  Utilize Pushbullet API or Slack bot to send real-time notifications (top scraping of each hour)
 
 ##### Phase 5
 * [ ]  Integrate MongoDB or lowdb for a database

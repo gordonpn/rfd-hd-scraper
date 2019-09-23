@@ -29,7 +29,7 @@ public class DigestCreator {
         GsonIO gsonIO = new GsonIO();
         Map<String, ThreadInfo> dailyDigestMap;
 
-        dailyDigestMap = gsonIO.read(filePaths.getDailyDigestJson(), new HashMap<>());
+        dailyDigestMap = gsonIO.read(filePaths.getDailyDigestJson());
         gsonIO.move(filePaths.getDailyDigestJson(), filePaths.getArchiveJson());
 
         List<ThreadInfo> sortedList = new ArrayList<>(dailyDigestMap.values());

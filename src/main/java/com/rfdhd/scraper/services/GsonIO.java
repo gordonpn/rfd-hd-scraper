@@ -8,33 +8,28 @@ import org.pmw.tinylog.Logger;
 
 import java.io.*;
 import java.lang.reflect.Type;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class GsonIO {
 
-    public void add(String filepath, Map<String, ThreadInfo> fromThisMap) {
+    public void write(String toThisFile, Map<String, ThreadInfo> fromThisMap) {
         Gson gsonWriter = new GsonBuilder().setPrettyPrinting().create();
-        Map<String, ThreadInfo> currentMap = fromThisMap;
-        Map<String, ThreadInfo> mapToAppend = read(filepath, fromThisMap);
 
-        currentMap.putAll(mapToAppend);
+        try (FileWriter fileWriter = new FileWriter(toThisFile)) {
 
-        try (FileWriter fileWriter = new FileWriter(filepath);) {
+            Logger.info("Writing " + toThisFile);
+            gsonWriter.toJson(fromThisMap, fileWriter);
+            Logger.info("Successfully wrote " + toThisFile);
+            Logger.info("Size of: " + toThisFile + " is " + fromThisMap.size() + " items");
 
-            Logger.info("Writing " + filepath);
-            gsonWriter.toJson(currentMap, fileWriter);
-            Logger.info("Successfully wrote " + filepath);
-            Logger.info("Size of: " + filepath + " is " + currentMap.size() + " items");
-
-            fileWriter.close();
         } catch (IOException e) {
             Logger.error("Error with writer. | " + e.getMessage());
         }
     }
 
-    public Map<String, ThreadInfo> read(String filepath, Map<String, ThreadInfo> newMap) {
-        Map mapFromJson = new HashMap<String, ThreadInfo>();
+    public Map read(String filepath) {
+        Map mapFromJson = new LinkedHashMap<String, ThreadInfo>();
 
         try (FileReader fileReader = new FileReader(filepath)) {
 
@@ -42,54 +37,38 @@ public class GsonIO {
             Type type = new TypeToken<Map<String, ThreadInfo>>() {
             }.getType();
             mapFromJson = new Gson().fromJson(fileReader, type);
+
+            if (mapFromJson == null || mapFromJson.isEmpty()) {
+                return new LinkedHashMap();
+            }
+
             Logger.info("Succesfully read from " + filepath);
+            Logger.info("Size of " + filepath + " is " + mapFromJson.size());
 
-            if (mapFromJson == null) {
-                return newMap;
-            } else if (newMap.isEmpty()) {
-                newMap.putAll(mapFromJson);
-                return newMap;
-            }
-
-            if (mapFromJson != null) {
-                Logger.info("Size of " + filepath + " is " + mapFromJson.size());
-                mapFromJson.keySet().forEach(newMap::remove);
-                Logger.info("Adding " + newMap.size() + " new items.");
-                newMap.putAll(mapFromJson);
-            }
-
-            fileReader.close();
         } catch (FileNotFoundException e) {
             Logger.error("Could not open file. | " + e.getMessage());
-            File file = new File(filepath);
-            try {
-                Logger.info("Creating " + filepath);
-                file.getParentFile().mkdirs();
-                file.createNewFile();
-            } catch (IOException ex) {
-                Logger.error("Could not create new file. | " + ex.getMessage());
-            }
+            createFile(filepath);
         } catch (IOException e) {
             Logger.error("Error with reader. | " + e.getMessage());
         }
 
-        return newMap;
+        return mapFromJson;
     }
 
-    public void move(String filePathFrom, String filePathTo) {
-        File fileFrom = new File(filePathFrom);
+    public void move(String fileFromPath, String filePathTo) {
+        File fileFrom = new File(fileFromPath);
 
-        Map<String, ThreadInfo> mapFrom = read(filePathFrom, new HashMap<String, ThreadInfo>());
+        Map mapFrom = read(fileFromPath);
 
-        Logger.info("Adding contents of " + filePathFrom + " to " + filePathTo);
-        add(filePathTo, mapFrom);
+        Logger.info("Adding contents of " + fileFromPath + " to " + filePathTo);
+        write(filePathTo, mapFrom);
 
-        Logger.info("Deleting: " + filePathFrom);
+        Logger.info("Deleting: " + fileFromPath);
         fileFrom.delete();
     }
 
     public Map<String, ThreadInfo> removeDuplicates(Map<String, ThreadInfo> mapGiven, String filePathCompareWith) {
-        Map<String, ThreadInfo> mapCompareWith = read(filePathCompareWith, new HashMap<String, ThreadInfo>());
+        Map mapCompareWith = read(filePathCompareWith);
 
         if (!mapCompareWith.isEmpty() && !mapGiven.isEmpty()) {
             Logger.info("Remove duplicates found in map when comparing with " + filePathCompareWith);
@@ -97,5 +76,16 @@ public class GsonIO {
         }
 
         return mapGiven;
+    }
+
+    private void createFile(String filepath) {
+        File file = new File(filepath);
+        try {
+            Logger.info("Creating " + filepath);
+            file.getParentFile().mkdirs();
+            file.createNewFile();
+        } catch (IOException ex) {
+            Logger.error("Could not create new file. | " + ex.getMessage());
+        }
     }
 }
