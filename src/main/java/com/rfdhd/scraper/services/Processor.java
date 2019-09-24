@@ -20,10 +20,15 @@ import java.util.Optional;
 public class Processor {
 
     public Map filter(Map<String, ThreadInfo> map) {
+        if (map == null || map.isEmpty()) {
+            return new LinkedHashMap();
+        }
+
         int votesThreshold = Calculate.POSTS.getMedian(map);
         Map filteredMap = new LinkedHashMap();
 
         Logger.info("Filtering threads");
+        Logger.info("Votes threshold: " + votesThreshold);
 
         map.forEach((threadID, threadInfo) -> {
             if (threadInfo.getVotesInt() > votesThreshold) {

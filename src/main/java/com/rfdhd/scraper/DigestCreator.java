@@ -6,6 +6,7 @@ import com.rfdhd.scraper.model.ThreadInfo;
 import com.rfdhd.scraper.model.configuration.Configuration;
 import com.rfdhd.scraper.report.DailyDigestEmailContent;
 import com.rfdhd.scraper.services.ContentBuilder;
+import com.rfdhd.scraper.services.DigestPreparer;
 import com.rfdhd.scraper.services.GsonIO;
 import com.rfdhd.scraper.services.MailClient;
 import org.pmw.tinylog.Logger;
@@ -14,7 +15,10 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.mail.javamail.JavaMailSender;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 
 import static com.rfdhd.scraper.utility.MachineChecker.isProdMachine;
 
@@ -27,28 +31,19 @@ public class DigestCreator {
         JavaMailSender mailSender = context.getBean(JavaMailSender.class);
 
         GsonIO gsonIO = new GsonIO();
-        Map<String, ThreadInfo> dailyDigestMap;
+        DigestPreparer digestPreparer = new DigestPreparer();
 
-        dailyDigestMap = gsonIO.read(filePaths.getDailyDigestJson());
+        Map dailyDigestMap = gsonIO.read(filePaths.getDailyDigestJson());
         gsonIO.move(filePaths.getDailyDigestJson(), filePaths.getArchiveJson());
 
-        List<ThreadInfo> sortedList = new ArrayList<>(dailyDigestMap.values());
+        dailyDigestMap = digestPreparer.removeOld(dailyDigestMap);
+        dailyDigestMap = digestPreparer.removeDuplicates(dailyDigestMap, filePaths.getArchiveJson());
 
-        Collections.sort(sortedList, new Comparator<ThreadInfo>() {
+        ArrayList sortedList = new ArrayList<>(dailyDigestMap.values());
 
-            @Override
-            public int compare(ThreadInfo o1, ThreadInfo o2) {
-                if (o1.getVotesInt() <= o2.getVotesInt()) {
-                    return 1;
-                } else {
-                    return -1;
-                }
-            }
+        sortedList.sort((Comparator<ThreadInfo>) (o1, o2) -> (o1.getVotesInt() <= o2.getVotesInt()) ? 1 : -1);
 
-        });
-
-        if (sortedList != null) {
-            if (sortedList.size() > 0) {
+        if (!sortedList.isEmpty()) {
 
                 DailyDigestEmailContent emailContent = new DailyDigestEmailContent(sortedList);
                 ContentBuilder contentBuilder = new ContentBuilder(emailContent);
@@ -68,12 +63,8 @@ public class DigestCreator {
                         Logger.error("Could not write email to file | " + e.getMessage());
                     }
                 }
-            } else {
-                Logger.info("dailyDigestJson did not contain anything; no email sent.");
-            }
         } else {
             Logger.info("dailyDigestJson was empty; no email sent.");
         }
-
     }
 }
