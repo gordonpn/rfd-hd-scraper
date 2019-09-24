@@ -3,8 +3,7 @@
     "rootFolder": "./",
     "pages": 10,
     "mailingList": [
-      "gordon.pn6@gmail.com",
-      "thanhvan68@hotmail.com"
+      "gordon.pn6@gmail.com"
     ],
     "email Settings": {
       "host": "smtp.gmail.com",
