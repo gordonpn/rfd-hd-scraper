@@ -52,7 +52,7 @@ public class ContentBuilder {
         if (isTestMachine()) {
             thymeleafPath = "/thymeleaf/";
         } else {
-            thymeleafPath = "classpath:/thymeleaf/";
+            thymeleafPath = "thymeleaf/";
         }
 
         resolver.setPrefix(thymeleafPath);

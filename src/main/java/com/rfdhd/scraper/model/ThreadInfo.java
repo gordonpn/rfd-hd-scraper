@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.Locale;
 
+import static com.rfdhd.scraper.utility.MachineChecker.isProdMachine;
 import static com.rfdhd.scraper.utility.MachineChecker.isWindowsMachine;
 
 public class ThreadInfo {
@@ -157,7 +158,7 @@ public class ThreadInfo {
     public LocalDateTime getLocalDateTime() {
         String pattern;
 
-        if (isWindowsMachine()) {
+        if (isWindowsMachine() || isProdMachine()) {
             pattern = "MMM d['st']['nd']['rd']['th'], yyyy h:mm a";
         } else {
             pattern = "LLL d['st']['nd']['rd']['th'], yyyy h:mm a";
