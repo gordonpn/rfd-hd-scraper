@@ -42,7 +42,7 @@ public class GsonIO {
                 return new LinkedHashMap();
             }
 
-            Logger.info("Succesfully read from " + filepath);
+            Logger.info("Successfully read from " + filepath);
             Logger.info("Size of " + filepath + " is " + mapFromJson.size());
 
         } catch (FileNotFoundException e) {
@@ -60,7 +60,7 @@ public class GsonIO {
 
         Map mapFrom = read(fileFromPath);
 
-        Logger.info("Adding contents of " + fileFromPath + " to " + filePathTo);
+        Logger.info("Moving contents of " + fileFromPath + " to " + filePathTo);
         write(filePathTo, mapFrom);
 
         Logger.info("Deleting: " + fileFromPath);

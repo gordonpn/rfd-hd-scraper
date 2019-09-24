@@ -19,12 +19,15 @@ public class DigestPreparer {
         }
 
         Logger.info("Removing threads older than 72 hours");
+        Logger.info("Size before: " + dailyDigestMap.size());
 
         dailyDigestMap.forEach((threadID, threadInfo) -> {
             if (Math.abs(HOURS.between(threadInfo.getLocalDateTime(), LocalDateTime.now())) < 72) {
                 newMap.put(threadID, threadInfo);
             }
         });
+
+        Logger.info("Size after: " + newMap.size());
 
         return newMap;
     }
@@ -39,12 +42,15 @@ public class DigestPreparer {
         }
 
         Logger.info("Removing duplicates when comparing with " + filePathCompareWith);
+        Logger.info("Size before: " + mapGiven.size());
 
         mapGiven.forEach((threadID, threadInfo) -> {
             if (mapCompareWith.get(threadID) == null) {
                 newMap.put(threadID, threadInfo);
             }
         });
+
+        Logger.info("Size after: " + newMap.size());
 
         return newMap;
     }
