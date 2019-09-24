@@ -64,8 +64,8 @@ java -cp *.jar com.rfdhd.scraper.DigestCreator
         * [x]  Save the interesting threads in dailyDigest disregarding the duplicates found in scrapings. 
 * [x]  When preparing the email, remove the duplicates by comparing with archive.
 * [x]  Filter out threads older than 72 hours when preparing email.
+* [x]  Read from config and template within the jar
 * [ ]  Refactor main class for digest email in the process.
-* [ ]  Read from config and template within the jar
 * [ ]  Write tests
 * [ ]  Improve styling of email template
 

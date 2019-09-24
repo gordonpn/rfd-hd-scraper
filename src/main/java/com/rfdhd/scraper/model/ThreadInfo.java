@@ -8,6 +8,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.Locale;
 
+import static com.rfdhd.scraper.utility.MachineChecker.isWindowsMachine;
+
 public class ThreadInfo {
 
     @SerializedName("ThreadID")
@@ -153,11 +155,18 @@ public class ThreadInfo {
     }
 
     public LocalDateTime getLocalDateTime() {
-        date = date.replaceAll("pm", "p.m.").replaceAll("am", "a.m.");
+        String pattern;
+
+        if (isWindowsMachine()) {
+            pattern = "MMM d['st']['nd']['rd']['th'], yyyy h:mm a";
+        } else {
+            pattern = "LLL d['st']['nd']['rd']['th'], yyyy h:mm a";
+            date = date.replaceAll("pm", "p.m.").replaceAll("am", "a.m.");
+        }
 
         DateTimeFormatter formatter = new DateTimeFormatterBuilder()
                 .parseCaseInsensitive()
-                .appendPattern("LLL d['st']['nd']['rd']['th'], yyyy h:mm a")
+                .appendPattern(pattern)
                 .toFormatter(Locale.ENGLISH);
 
         return LocalDateTime.parse(date, formatter);
