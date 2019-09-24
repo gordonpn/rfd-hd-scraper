@@ -67,15 +67,26 @@ public class GsonIO {
         fileFrom.delete();
     }
 
-    public Map<String, ThreadInfo> removeDuplicates(Map<String, ThreadInfo> mapGiven, String filePathCompareWith) {
+    public Map removeDuplicates(Map<String, ThreadInfo> mapGiven, String filePathCompareWith) {
+        Map newMap = new LinkedHashMap();
         Map mapCompareWith = read(filePathCompareWith);
 
-        if (!mapCompareWith.isEmpty() && !mapGiven.isEmpty()) {
-            Logger.info("Remove duplicates found in map when comparing with " + filePathCompareWith);
-            mapCompareWith.keySet().forEach(mapGiven::remove);
+        if (mapGiven == null || mapGiven.isEmpty()) {
+            return newMap;
         }
 
-        return mapGiven;
+        Logger.info("Removing duplicates when comparing with " + filePathCompareWith);
+        Logger.info("Size before: " + mapGiven.size());
+
+        mapGiven.forEach((threadID, threadInfo) -> {
+            if (mapCompareWith.get(threadID) == null) {
+                newMap.put(threadID, threadInfo);
+            }
+        });
+
+        Logger.info("Size after: " + newMap.size());
+
+        return newMap;
     }
 
     private void createFile(String filepath) {

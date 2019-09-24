@@ -36,6 +36,7 @@ public class Processor {
             }
         });
 
+        Logger.info("Size of scrapings after filtering: " + filteredMap.size());
         return filteredMap;
     }
 

@@ -31,27 +31,4 @@ public class DigestPreparer {
 
         return newMap;
     }
-
-    public Map removeDuplicates(Map<String, ThreadInfo> mapGiven, String filePathCompareWith) {
-        GsonIO gsonIO = new GsonIO();
-        Map newMap = new LinkedHashMap();
-        Map mapCompareWith = gsonIO.read(filePathCompareWith);
-
-        if (mapGiven == null || mapGiven.isEmpty()) {
-            return newMap;
-        }
-
-        Logger.info("Removing duplicates when comparing with " + filePathCompareWith);
-        Logger.info("Size before: " + mapGiven.size());
-
-        mapGiven.forEach((threadID, threadInfo) -> {
-            if (mapCompareWith.get(threadID) == null) {
-                newMap.put(threadID, threadInfo);
-            }
-        });
-
-        Logger.info("Size after: " + newMap.size());
-
-        return newMap;
-    }
 }
