@@ -12,6 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
+import java.io.FileNotFoundException;
 import java.util.Properties;
 
 @org.springframework.context.annotation.Configuration
@@ -28,7 +29,7 @@ public class SpringConfiguration {
             try {
                 Logger.info("Loading configuration.json");
                 configuration = configurationLoader.loadConfiguration();
-            } catch (NoConfigurationException e) {
+            } catch (NoConfigurationException | FileNotFoundException e) {
                 Logger.error("Error with loading configuration | " + e.getMessage());
                 Logger.error("Exiting app.");
                 System.exit(1);

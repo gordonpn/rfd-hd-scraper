@@ -40,6 +40,12 @@ public class DigestPreparer {
 
         Logger.info("Removing duplicates when comparing with " + filePathCompareWith);
 
+        mapGiven.forEach((threadID, threadInfo) -> {
+            if (mapCompareWith.get(threadID) == null) {
+                newMap.put(threadID, threadInfo);
+            }
+        });
+
         return newMap;
     }
 }

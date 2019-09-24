@@ -34,37 +34,37 @@ public class DigestCreator {
         DigestPreparer digestPreparer = new DigestPreparer();
 
         Map dailyDigestMap = gsonIO.read(filePaths.getDailyDigestJson());
-        gsonIO.move(filePaths.getDailyDigestJson(), filePaths.getArchiveJson());
 
         dailyDigestMap = digestPreparer.removeOld(dailyDigestMap);
         dailyDigestMap = digestPreparer.removeDuplicates(dailyDigestMap, filePaths.getArchiveJson());
 
         ArrayList sortedList = new ArrayList<>(dailyDigestMap.values());
 
-        sortedList.sort((Comparator<ThreadInfo>) (o1, o2) -> (o1.getVotesInt() <= o2.getVotesInt()) ? 1 : -1);
-
         if (!sortedList.isEmpty()) {
+            sortedList.sort((Comparator<ThreadInfo>) (o1, o2) -> (o1.getVotesInt() <= o2.getVotesInt()) ? 1 : -1);
 
-                DailyDigestEmailContent emailContent = new DailyDigestEmailContent(sortedList);
-                ContentBuilder contentBuilder = new ContentBuilder(emailContent);
+            DailyDigestEmailContent emailContent = new DailyDigestEmailContent(sortedList);
+            ContentBuilder contentBuilder = new ContentBuilder(emailContent);
 
-                if (isProdMachine()) {
+            if (isProdMachine()) {
 
-                    MailClient mailClient = new MailClient(mailSender);
-                    List<String> mailingList = configuration.getMailingList();
-                    String content = contentBuilder.getHtmlContent();
+                MailClient mailClient = new MailClient(mailSender);
+                List<String> mailingList = configuration.getMailingList();
+                String content = contentBuilder.getHtmlContent();
 
-                    mailClient.prepareAndSend(mailingList, content);
+                mailClient.prepareAndSend(mailingList, content);
 
-                } else {
-                    try {
-                        contentBuilder.write();
-                    } catch (IOException e) {
-                        Logger.error("Could not write email to file | " + e.getMessage());
-                    }
+            } else {
+                try {
+                    contentBuilder.write();
+                } catch (IOException e) {
+                    Logger.error("Could not write email to file | " + e.getMessage());
                 }
+            }
         } else {
             Logger.info("dailyDigestJson was empty; no email sent.");
         }
+
+        gsonIO.move(filePaths.getDailyDigestJson(), filePaths.getArchiveJson());
     }
 }

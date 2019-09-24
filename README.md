@@ -62,8 +62,8 @@ java -cp *.jar com.rfdhd.scraper.DigestCreator
         * [x]  Try to read the existing files before scraping. And put into those existing maps, thus updating values with identical keys.
         * [x]  Only filter based on the median of pages scraped, not entire scrapings json.
         * [x]  Save the interesting threads in dailyDigest disregarding the duplicates found in scrapings. 
-* [ ]  When preparing the email, remove the duplicates by comparing with archive.
-* [ ]  Filter out threads older than 72 hours when preparing email.
+* [x]  When preparing the email, remove the duplicates by comparing with archive.
+* [x]  Filter out threads older than 72 hours when preparing email.
 * [ ]  Refactor main class for digest email in the process.
 * [ ]  Read from config and template within the jar
 * [ ]  Write tests

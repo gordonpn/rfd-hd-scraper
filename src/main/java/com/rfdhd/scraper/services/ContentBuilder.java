@@ -14,6 +14,8 @@ import java.io.StringWriter;
 import java.nio.charset.Charset;
 import java.util.Locale;
 
+import static com.rfdhd.scraper.utility.MachineChecker.isTestMachine;
+
 public class ContentBuilder {
 
     private EmailContent emailContent;
@@ -45,7 +47,15 @@ public class ContentBuilder {
     private ClassLoaderTemplateResolver getClassLoaderTemplateResolver() {
         ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
 
-        resolver.setPrefix("/thymeleaf/");
+        String thymeleafPath;
+
+        if (isTestMachine()) {
+            thymeleafPath = "/thymeleaf/";
+        } else {
+            thymeleafPath = "classpath:/thymeleaf/";
+        }
+
+        resolver.setPrefix(thymeleafPath);
         resolver.setSuffix(".html");
         resolver.setTemplateMode(TemplateMode.HTML);
 
