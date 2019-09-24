@@ -65,6 +65,7 @@ java -cp *.jar com.rfdhd.scraper.DigestCreator
 * [x]  When preparing the email, remove the duplicates by comparing with archive.
 * [x]  Filter out threads older than 72 hours when preparing email.
 * [x]  Read from config and template within the jar
+* [ ]  Add commandline flags to differentiate testing on prod and prod
 
 ##### Phase 4
 * [ ]  Utilize Pushbullet API or Slack bot to send real-time notifications (top scraping of each hour)
