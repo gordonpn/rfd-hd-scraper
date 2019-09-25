@@ -59,9 +59,11 @@ public class GsonIO {
         File fileFrom = new File(fileFromPath);
 
         Map mapFrom = read(fileFromPath);
+        Map mapTo = read(filePathTo);
+        mapTo.putAll(mapFrom);
 
         Logger.info("Moving contents of " + fileFromPath + " to " + filePathTo);
-        write(filePathTo, mapFrom);
+        write(filePathTo, mapTo);
 
         Logger.info("Deleting: " + fileFromPath);
         fileFrom.delete();

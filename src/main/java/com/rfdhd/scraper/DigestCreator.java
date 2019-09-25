@@ -41,7 +41,7 @@ public class DigestCreator {
         ArrayList sortedList = new ArrayList<>(dailyDigestMap.values());
 
         if (!sortedList.isEmpty()) {
-            sortedList.sort((Comparator<ThreadInfo>) (o1, o2) -> (o1.getVotesInt() <= o2.getVotesInt()) ? 1 : -1);
+            sortedList.sort((Comparator<ThreadInfo>) (thisThread, thatThread) -> (thisThread.getVotesInt() <= thatThread.getVotesInt()) ? 1 : -1);
 
             DailyDigestEmailContent emailContent = new DailyDigestEmailContent(sortedList);
             ContentBuilder contentBuilder = new ContentBuilder(emailContent);
