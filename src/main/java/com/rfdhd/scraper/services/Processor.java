@@ -71,16 +71,37 @@ public class Processor {
         String expandedUrl = "";
         try {
             URL url = new URL(affiliateUrl);
+            boolean redirect = false;
+
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection(Proxy.NO_PROXY);
+            httpURLConnection.setReadTimeout(5000);
+            httpURLConnection.addRequestProperty("Accept-Language", "en-US,en;q=0.8");
+            httpURLConnection.addRequestProperty("User-Agent", "Mozilla");
+            httpURLConnection.addRequestProperty("Referer", "google.com");
             httpURLConnection.setInstanceFollowRedirects(false);
-            expandedUrl = httpURLConnection.getHeaderField("Location");
+
+            int status = httpURLConnection.getResponseCode();
+            if (status != HttpURLConnection.HTTP_OK) {
+                if (status == HttpURLConnection.HTTP_MOVED_TEMP
+                        || status == HttpURLConnection.HTTP_MOVED_PERM
+                        || status == HttpURLConnection.HTTP_SEE_OTHER) {
+                    redirect = true;
+                }
+            }
+
+            if (redirect) {
+                expandedUrl = httpURLConnection.getHeaderField("Location");
+                Logger.info("Got direct link: " + expandedUrl);
+            }
+
             httpURLConnection.disconnect();
+
         } catch (MalformedURLException e) {
             Logger.error("Could not get affiliate URL | " + e.getMessage());
         } catch (IOException e) {
             Logger.error("Could not connect to affiliate URL | " + e.getMessage());
         }
-        Logger.info("Got direct link: " + expandedUrl);
+
         return expandedUrl;
     }
 
