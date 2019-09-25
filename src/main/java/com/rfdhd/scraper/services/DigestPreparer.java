@@ -13,17 +13,17 @@ public class DigestPreparer {
 
     public Map removeOld(Map<String, ThreadInfo> dailyDigestMap) {
         Map newMap = new LinkedHashMap();
-        final int hoursThreshold = 120;
+        final int HOURS_THRESHOLD = 120;
 
         if (dailyDigestMap == null || dailyDigestMap.isEmpty()) {
             return newMap;
         }
 
-        Logger.info("Removing threads older than " + hoursThreshold + " hours");
+        Logger.info("Removing threads older than " + HOURS_THRESHOLD + " hours");
         Logger.info("Size before: " + dailyDigestMap.size());
 
         dailyDigestMap.forEach((threadID, threadInfo) -> {
-            if (Math.abs(HOURS.between(threadInfo.getLocalDateTime(), LocalDateTime.now())) < hoursThreshold) {
+            if (Math.abs(HOURS.between(threadInfo.getLocalDateTime(), LocalDateTime.now())) < HOURS_THRESHOLD) {
                 newMap.put(threadID, threadInfo);
             }
         });

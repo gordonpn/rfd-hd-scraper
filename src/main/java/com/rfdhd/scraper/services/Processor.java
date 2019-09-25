@@ -106,6 +106,7 @@ public class Processor {
     }
 
     private void getContent(Document page, ThreadInfo thread) {
+        final int MAX_CONTENT_LENGTH = 140;
         Logger.info("Getting content of thread " + thread.getThreadID());
         Elements posts = page.select("div.content");
         if (!posts.isEmpty()) {
@@ -113,8 +114,8 @@ public class Processor {
             String content = firstPost.text();
             String patternRegex = "(?i)<br */?>";
             content = content.replaceAll(patternRegex, " ").replaceAll("\"", "");
-            if (content.length() > 100) {
-                content = content.substring(0, 100);
+            if (content.length() > MAX_CONTENT_LENGTH) {
+                content = content.substring(0, MAX_CONTENT_LENGTH);
             }
             content = content.concat("...");
             thread.setContent(content);
