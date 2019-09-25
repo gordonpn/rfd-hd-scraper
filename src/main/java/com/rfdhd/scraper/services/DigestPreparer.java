@@ -19,6 +19,7 @@ public class DigestPreparer {
         }
 
         Logger.info("Removing threads older than 72 hours");
+        Logger.info("Size before: " + dailyDigestMap.size());
 
         dailyDigestMap.forEach((threadID, threadInfo) -> {
             if (Math.abs(HOURS.between(threadInfo.getLocalDateTime(), LocalDateTime.now())) < 72) {
@@ -26,25 +27,7 @@ public class DigestPreparer {
             }
         });
 
-        return newMap;
-    }
-
-    public Map removeDuplicates(Map<String, ThreadInfo> mapGiven, String filePathCompareWith) {
-        GsonIO gsonIO = new GsonIO();
-        Map newMap = new LinkedHashMap();
-        Map mapCompareWith = gsonIO.read(filePathCompareWith);
-
-        if (mapGiven == null || mapGiven.isEmpty()) {
-            return newMap;
-        }
-
-        Logger.info("Removing duplicates when comparing with " + filePathCompareWith);
-
-        mapGiven.forEach((threadID, threadInfo) -> {
-            if (mapCompareWith.get(threadID) == null) {
-                newMap.put(threadID, threadInfo);
-            }
-        });
+        Logger.info("Size after: " + newMap.size());
 
         return newMap;
     }

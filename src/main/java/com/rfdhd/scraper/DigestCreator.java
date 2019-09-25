@@ -36,7 +36,7 @@ public class DigestCreator {
         Map dailyDigestMap = gsonIO.read(filePaths.getDailyDigestJson());
 
         dailyDigestMap = digestPreparer.removeOld(dailyDigestMap);
-        dailyDigestMap = digestPreparer.removeDuplicates(dailyDigestMap, filePaths.getArchiveJson());
+        dailyDigestMap = gsonIO.removeDuplicates(dailyDigestMap, filePaths.getArchiveJson());
 
         ArrayList sortedList = new ArrayList<>(dailyDigestMap.values());
 

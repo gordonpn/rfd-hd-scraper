@@ -29,6 +29,7 @@ public class App {
         Map<String, ThreadInfo> newScrapings = scraper.getThreadsMap();
 
         Map newDailyDigest = process.filter(newScrapings);
+        newDailyDigest = gsonIO.removeDuplicates(newDailyDigest, filePaths.getArchiveJson());
 
         process.loadThreads(newDailyDigest);
 
