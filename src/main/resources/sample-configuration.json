@@ -3,8 +3,8 @@
     "rootFolder": "./",
     "pages": 10,
     "mailingList": [
-      "gordon.pn6@gmail.com",
-      "thanhvan68@hotmail.com"
+      "",
+      ""
     ],
     "email Settings": {
       "host": "smtp.gmail.com",
@@ -20,7 +20,7 @@
     "rootFolder": "target/resources/",
     "pages": 1,
     "mailingList": [
-      "gordon.pn6@gmail.com"
+      ""
     ],
     "email Settings": {
       "host": "smtp.gmail.com",
