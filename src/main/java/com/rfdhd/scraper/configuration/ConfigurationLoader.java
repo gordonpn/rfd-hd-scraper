@@ -13,10 +13,9 @@ import java.lang.reflect.Type;
 import static com.rfdhd.scraper.utility.MachineChecker.isProdMachine;
 import static com.rfdhd.scraper.utility.MachineChecker.isTestMachine;
 
-public class ConfigurationLoader {
+class ConfigurationLoader {
 
-
-    public Configuration loadConfiguration() throws NoConfigurationException, FileNotFoundException {
+    Configuration loadConfiguration() throws NoConfigurationException, FileNotFoundException {
         InputStream filePath = getConfigFilePath();
 
         try (InputStreamReader fileReader = new InputStreamReader(filePath)) {

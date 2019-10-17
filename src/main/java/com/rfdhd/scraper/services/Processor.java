@@ -67,6 +67,25 @@ public class Processor {
         thread.setDirectLink(expandedUrl);
     }
 
+    private void getContent(Document page, ThreadInfo thread) {
+        final int MAX_CONTENT_LENGTH = 140;
+        Logger.info("Getting content of thread " + thread.getThreadID());
+        Elements posts = page.select("div.content");
+        if (!posts.isEmpty()) {
+            Element firstPost = posts.get(0);
+            String content = firstPost.text();
+            String patternRegex = "(?i)<br */?>";
+            content = content
+                    .replaceAll(patternRegex, " ")
+                    .replace("\"", "");
+            if (content.length() > MAX_CONTENT_LENGTH) {
+                content = content.substring(0, MAX_CONTENT_LENGTH);
+            }
+            content = content.concat("...");
+            thread.setContent(content);
+        }
+    }
+
     private String expandUrl(String affiliateUrl) {
         String expandedUrl = "";
         try {
@@ -103,22 +122,5 @@ public class Processor {
         }
 
         return expandedUrl;
-    }
-
-    private void getContent(Document page, ThreadInfo thread) {
-        final int MAX_CONTENT_LENGTH = 140;
-        Logger.info("Getting content of thread " + thread.getThreadID());
-        Elements posts = page.select("div.content");
-        if (!posts.isEmpty()) {
-            Element firstPost = posts.get(0);
-            String content = firstPost.text();
-            String patternRegex = "(?i)<br */?>";
-            content = content.replaceAll(patternRegex, " ").replaceAll("\"", "");
-            if (content.length() > MAX_CONTENT_LENGTH) {
-                content = content.substring(0, MAX_CONTENT_LENGTH);
-            }
-            content = content.concat("...");
-            thread.setContent(content);
-        }
     }
 }

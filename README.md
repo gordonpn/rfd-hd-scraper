@@ -65,9 +65,9 @@ java -cp *.jar com.rfdhd.scraper.DigestCreator
 * [x]  When preparing the email, remove the duplicates by comparing with archive.
 * [x]  Filter out threads older than 72 hours when preparing email.
 * [x]  Read from config and template within the jar
-* [ ]  Add commandline flags to differentiate testing on prod and prod
 
 ##### Phase 4
+* [ ]  Add commandline flags to differentiate testing on prod and prod
 * [ ]  Utilize Pushbullet API or Slack bot to send real-time notifications (top scraping of each hour)
 
 ##### Phase 5
@@ -82,7 +82,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 Those who provided me moral support on my first real project!
 
 ## License
-[GNU AGPLv3](https://choosealicense.com/licenses/agpl-3.0)
+[Apache License 2.0](https://choosealicense.com/licenses/apache-2.0/)
 
 ## Project status
 To me, I believe this project is 90% finished, the core features are all there. What's left to do are nice extras.

@@ -2,11 +2,14 @@ package com.rfdhd.scraper.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.StringUtils;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.util.Arrays;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import static com.rfdhd.scraper.utility.MachineChecker.isProdMachine;
 import static com.rfdhd.scraper.utility.MachineChecker.isWindowsMachine;
@@ -64,6 +67,7 @@ public class ThreadInfo {
     }
 
     public void setTopicTitle(String value) {
+        value = Arrays.stream(value.split("\\s+")).distinct().collect(Collectors.joining(" "));
         this.topicTitle = value;
     }
 
@@ -87,20 +91,27 @@ public class ThreadInfo {
         return this.posts;
     }
 
-    public int getPostsInt() {
-        if (posts == null) {
-            return 0;
-        } else {
-            return Integer.parseInt(posts.replaceAll(",", ""));
-        }
-    }
-
     public void setPosts(String value) {
         this.posts = value;
     }
 
+    public int getPostsInt() {
+        if (posts == null) {
+            return 0;
+        } else {
+            return Integer.parseInt(posts.replace(",", ""));
+        }
+    }
+
     public String getVotes() {
         return this.votes;
+    }
+
+    public void setVotes(String value) {
+        if (StringUtils.isEmpty(value)) {
+            value = "0";
+        }
+        this.votes = value;
     }
 
     public int getVotesInt() {
@@ -111,24 +122,20 @@ public class ThreadInfo {
         }
     }
 
-    public void setVotes(String value) {
-        this.votes = value;
-    }
-
     public String getViews() {
         return this.views;
+    }
+
+    public void setViews(String value) {
+        this.views = value;
     }
 
     public int getViewsInt() {
         if (views == null) {
             return 0;
         } else {
-            return Integer.parseInt(views.replaceAll(",", ""));
+            return Integer.parseInt(views.replace(",", ""));
         }
-    }
-
-    public void setViews(String value) {
-        this.views = value;
     }
 
     public String getThreadCategory() {
@@ -162,7 +169,7 @@ public class ThreadInfo {
             pattern = "MMM d['st']['nd']['rd']['th'], yyyy h:mm a";
         } else {
             pattern = "LLL d['st']['nd']['rd']['th'], yyyy h:mm a";
-            date = date.replaceAll("pm", "p.m.").replaceAll("am", "a.m.");
+            date = date.replace("pm", "p.m.").replace("am", "a.m.");
         }
 
         DateTimeFormatter formatter = new DateTimeFormatterBuilder()

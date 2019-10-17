@@ -1,8 +1,8 @@
 package com.rfdhd.scraper.services;
 
-import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
 import com.rfdhd.scraper.model.ThreadInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -12,12 +12,13 @@ import org.pmw.tinylog.Logger;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 public class Scraper {
 
-    int pages;
-    Map<String, ThreadInfo> threads;
+    private int pages;
+    private Map<String, ThreadInfo> threads;
 
     public Scraper(int pages) {
         this.pages = pages;
@@ -29,20 +30,20 @@ public class Scraper {
             threads = scrape();
         }
 
-        Iterables.removeIf(threads.keySet(), Predicates.isNull());
+        Iterables.removeIf(threads.keySet(), Objects::isNull);
         Logger.info("Size of scrapings after getThreadsMap: " + threads.size());
         return threads;
     }
 
     private Map<String, ThreadInfo> scrape() {
         Map<String, ThreadInfo> threadsMap = new LinkedHashMap<>();
-        Map<String, ThreadInfo> threadsMapPerPage = new LinkedHashMap<>();
-        Elements threads;
+        Map<String, ThreadInfo> threadsMapPerPage;
+        Elements threadsElements;
 
         for (int i = 0; i < pages; i++) {
-            threads = scrapePerPage(i);
-            if (threads != null) {
-                threadsMapPerPage = readThreads(threads, new LinkedHashMap<>());
+            threadsElements = scrapePerPage(i);
+            if (threadsElements != null) {
+                threadsMapPerPage = readThreads(threadsElements, new LinkedHashMap<>());
                 threadsMap.putAll(threadsMapPerPage);
             }
         }
@@ -82,20 +83,32 @@ public class Scraper {
 
         String id = line.attr("data-thread-id");
         if (!id.equals("")) {
-//            Logger.info("Parsing thread ID: " + id);
+            String topicTitle = "";
+            String retailer = line.getElementsByClass("topictitle_retailer").text();
+            String unformattedRetailer = "";
+            String rawTopicTitle = line.getElementsByClass("topic_title_link").text();
+            String prefix = "http://forums.redflagdeals.com";
+            String link = line.getElementsByClass("topic_title_link").attr("href");
+
+            if (StringUtils.isEmpty(retailer)) {
+                unformattedRetailer = line.getElementsByClass("topictitle")
+                        .text()
+                        .replace("\"", "")
+                        .replace("[", "")
+                        .replace("]", "")
+                        .trim();
+                topicTitle = unformattedRetailer;
+            }
+            if (StringUtils.isNotEmpty(retailer) && !rawTopicTitle.toLowerCase().contains(retailer.toLowerCase())) {
+                topicTitle = retailer + " " + rawTopicTitle;
+            }
+
             threadInfo.setThreadID(id);
             threadInfo.setPosts(line.getElementsByClass("posts").text());
             threadInfo.setViews(line.getElementsByClass("views").text());
             threadInfo.setThreadCategory(line.getElementsByClass("thread_category").text());
-            threadInfo.setTopicTitle(line.getElementsByClass("topic_title_link").text());
-            String votes = line.getElementsByClass("total_count total_count_selector").text();
-            if (!votes.equals("")) {
-                threadInfo.setVotes(votes);
-            } else {
-                threadInfo.setVotes("0");
-            }
-            String prefix = "http://forums.redflagdeals.com";
-            String link = line.getElementsByClass("topic_title_link").attr("href");
+            threadInfo.setTopicTitle(topicTitle);
+            threadInfo.setVotes(line.getElementsByClass("total_count total_count_selector").text());
             threadInfo.setLink(prefix.concat(link));
             threadInfo.setDirectLink("");
             threadInfo.setContent("");
