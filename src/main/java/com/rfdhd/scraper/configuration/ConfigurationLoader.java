@@ -52,7 +52,7 @@ class ConfigurationLoader {
 
         if (isProdMachine()) {
 
-            filePath = getClass().getResourceAsStream("/configuration.json");
+            filePath = new FileInputStream("./configuration.json");
             logger.info("Configuration found in: {}", filePath);
             return filePath;
 
