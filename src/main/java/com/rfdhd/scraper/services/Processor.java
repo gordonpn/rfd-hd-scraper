@@ -1,12 +1,13 @@
 package com.rfdhd.scraper.services;
 
+import ch.qos.logback.classic.Logger;
 import com.rfdhd.scraper.model.ThreadInfo;
 import com.rfdhd.scraper.utility.Calculate;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.pmw.tinylog.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -19,6 +20,8 @@ import java.util.Optional;
 
 public class Processor {
 
+    private static Logger logger = (Logger) LoggerFactory.getLogger(Scraper.class);
+
     public Map filter(Map<String, ThreadInfo> map) {
         if (map == null || map.isEmpty()) {
             return new LinkedHashMap();
@@ -27,8 +30,8 @@ public class Processor {
         int votesThreshold = Calculate.POSTS.getMedian(map);
         Map filteredMap = new LinkedHashMap();
 
-        Logger.info("Filtering threads");
-        Logger.info("Votes threshold: " + votesThreshold);
+        logger.info("Filtering threads");
+        logger.info("Votes threshold: {}", votesThreshold);
 
         map.forEach((threadID, threadInfo) -> {
             if (threadInfo.getVotesInt() > votesThreshold) {
@@ -36,19 +39,19 @@ public class Processor {
             }
         });
 
-        Logger.info("Size of scrapings after filtering: " + filteredMap.size());
+        logger.info("Size of scrapings after filtering: {}", filteredMap.size());
         return filteredMap;
     }
 
     public void loadThreads(Map<String, ThreadInfo> map) {
         map.forEach((id, thread) -> {
-            Logger.info("Getting direct link for thread ID: " + thread.getThreadID());
+            logger.info("Getting direct link for thread ID: {}", thread.getThreadID());
             String url = thread.getLink();
             Optional<Document> threadPage;
             try {
                 threadPage = Optional.ofNullable(Jsoup.connect(url).get());
             } catch (IOException e) {
-                Logger.error("Could not connect to link | " + e.getMessage());
+                logger.error("Could not connect to link | {}", e.getMessage());
                 threadPage = Optional.empty();
             }
             threadPage.ifPresent(page -> {
@@ -62,14 +65,14 @@ public class Processor {
         Elements dealLinkElement = page.getElementsByClass("deal_link");
         Elements aLine = dealLinkElement.select("a");
         String affiliateUrl = aLine.attr("href");
-        Logger.info("Getting affiliate link: " + affiliateUrl);
+        logger.info("Getting affiliate link: {}", affiliateUrl);
         String expandedUrl = expandUrl(affiliateUrl);
         thread.setDirectLink(expandedUrl);
     }
 
     private void getContent(Document page, ThreadInfo thread) {
         final int MAX_CONTENT_LENGTH = 140;
-        Logger.info("Getting content of thread " + thread.getThreadID());
+        logger.info("Getting content of thread {}", thread.getThreadID());
         Elements posts = page.select("div.content");
         if (!posts.isEmpty()) {
             Element firstPost = posts.get(0);
@@ -100,25 +103,23 @@ public class Processor {
             httpURLConnection.setInstanceFollowRedirects(false);
 
             int status = httpURLConnection.getResponseCode();
-            if (status != HttpURLConnection.HTTP_OK) {
-                if (status == HttpURLConnection.HTTP_MOVED_TEMP
-                        || status == HttpURLConnection.HTTP_MOVED_PERM
-                        || status == HttpURLConnection.HTTP_SEE_OTHER) {
-                    redirect = true;
-                }
+            if (status != HttpURLConnection.HTTP_OK && (status == HttpURLConnection.HTTP_MOVED_TEMP
+                    || status == HttpURLConnection.HTTP_MOVED_PERM
+                    || status == HttpURLConnection.HTTP_SEE_OTHER)) {
+                redirect = true;
             }
 
             if (redirect) {
                 expandedUrl = httpURLConnection.getHeaderField("Location");
-                Logger.info("Got direct link: " + expandedUrl);
+                logger.info("Got direct link: {}", expandedUrl);
             }
 
             httpURLConnection.disconnect();
 
         } catch (MalformedURLException e) {
-            Logger.error("Could not get affiliate URL | " + e.getMessage());
+            logger.error("Could not get affiliate URL | {}", e.getMessage());
         } catch (IOException e) {
-            Logger.error("Could not connect to affiliate URL | " + e.getMessage());
+            logger.error("Could not connect to affiliate URL | {}", e.getMessage());
         }
 
         return expandedUrl;

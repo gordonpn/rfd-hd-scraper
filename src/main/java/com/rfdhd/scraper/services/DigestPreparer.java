@@ -1,7 +1,8 @@
 package com.rfdhd.scraper.services;
 
+import ch.qos.logback.classic.Logger;
 import com.rfdhd.scraper.model.ThreadInfo;
-import org.pmw.tinylog.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
@@ -11,6 +12,8 @@ import static java.time.temporal.ChronoUnit.HOURS;
 
 public class DigestPreparer {
 
+    private static Logger logger = (Logger) LoggerFactory.getLogger(Scraper.class);
+
     public Map removeOld(Map<String, ThreadInfo> dailyDigestMap) {
         Map newMap = new LinkedHashMap();
         final int HOURS_THRESHOLD = 120;
@@ -19,8 +22,8 @@ public class DigestPreparer {
             return newMap;
         }
 
-        Logger.info("Removing threads older than " + HOURS_THRESHOLD + " hours");
-        Logger.info("Size before: " + dailyDigestMap.size());
+        logger.info("Removing threads older than {} hours", HOURS_THRESHOLD);
+        logger.info("Size before: {}", dailyDigestMap.size());
 
         dailyDigestMap.forEach((threadID, threadInfo) -> {
             if (Math.abs(HOURS.between(threadInfo.getLocalDateTime(), LocalDateTime.now())) < HOURS_THRESHOLD) {
@@ -28,7 +31,7 @@ public class DigestPreparer {
             }
         });
 
-        Logger.info("Size after: " + newMap.size());
+        logger.info("Size after: {}", newMap.size());
 
         return newMap;
     }

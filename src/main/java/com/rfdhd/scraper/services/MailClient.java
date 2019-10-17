@@ -1,7 +1,8 @@
 package com.rfdhd.scraper.services;
 
+import ch.qos.logback.classic.Logger;
 import com.google.common.collect.Iterables;
-import org.pmw.tinylog.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -15,8 +16,9 @@ import java.util.List;
 @Service
 public class MailClient {
 
-    private JavaMailSender mailSender;
+    private static Logger logger = (Logger) LoggerFactory.getLogger(MailClient.class);
     private final String FROM_EMAIL = "gordon.pn6@gmail.com";
+    private JavaMailSender mailSender;
 
     @Autowired
     public MailClient(JavaMailSender javaMailSender) {
@@ -35,7 +37,7 @@ public class MailClient {
         try {
             mailSender.send(mimeMessagePreparator);
         } catch (MailException e) {
-            Logger.error("Error occurred while trying to send email | " + e.getMessage());
+            logger.error("Error occurred while trying to send email | {}", e.getMessage());
         }
     }
 }

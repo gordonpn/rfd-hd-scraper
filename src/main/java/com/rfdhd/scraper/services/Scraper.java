@@ -1,5 +1,6 @@
 package com.rfdhd.scraper.services;
 
+import ch.qos.logback.classic.Logger;
 import com.google.common.collect.Iterables;
 import com.rfdhd.scraper.model.ThreadInfo;
 import org.apache.commons.lang3.StringUtils;
@@ -7,7 +8,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.pmw.tinylog.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -15,8 +16,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+import static com.rfdhd.scraper.configuration.LoggerConfiguration.getLoggerLevel;
+
 public class Scraper {
 
+    private static Logger logger = (Logger) LoggerFactory.getLogger(Scraper.class);
     private int pages;
     private Map<String, ThreadInfo> threads;
 
@@ -31,7 +35,7 @@ public class Scraper {
         }
 
         Iterables.removeIf(threads.keySet(), Objects::isNull);
-        Logger.info("Size of scrapings after getThreadsMap: " + threads.size());
+        logger.info("Size of scrapings after getThreadsMap: {}", threads.size());
         return threads;
     }
 
@@ -58,12 +62,12 @@ public class Scraper {
                 url = url.concat(String.valueOf(page + 1));
             }
             doc = Optional.ofNullable(Jsoup.connect(url).get());
-            Logger.info("Scraping: " + url);
+            logger.info("Scraping: {}", url);
             if (doc.isPresent()) {
                 return doc.get().getElementsByClass("topiclist topics with_categories");
             }
         } catch (IOException e) {
-            Logger.error("Error with scraping page | " + e.getMessage());
+            logger.error("Error with scraping page | {}", e.getMessage());
         }
         return null;
     }
@@ -80,12 +84,14 @@ public class Scraper {
 
     private Map<String, ThreadInfo> parse(Element line, Map<String, ThreadInfo> threadsMap) {
         ThreadInfo threadInfo = new ThreadInfo();
+        logger.setLevel(getLoggerLevel());
 
         String id = line.attr("data-thread-id");
         if (!id.equals("")) {
+            logger.debug("Parsing thread ID: {}", id);
             String topicTitle = "";
             String retailer = line.getElementsByClass("topictitle_retailer").text();
-            String unformattedRetailer = "";
+            String unformattedRetailer;
             String rawTopicTitle = line.getElementsByClass("topic_title_link").text();
             String prefix = "http://forums.redflagdeals.com";
             String link = line.getElementsByClass("topic_title_link").attr("href");

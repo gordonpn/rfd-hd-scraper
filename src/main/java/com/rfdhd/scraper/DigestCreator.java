@@ -1,5 +1,6 @@
 package com.rfdhd.scraper;
 
+import ch.qos.logback.classic.Logger;
 import com.rfdhd.scraper.configuration.SpringConfiguration;
 import com.rfdhd.scraper.model.FilePaths;
 import com.rfdhd.scraper.model.ThreadInfo;
@@ -9,7 +10,7 @@ import com.rfdhd.scraper.services.ContentBuilder;
 import com.rfdhd.scraper.services.DigestPreparer;
 import com.rfdhd.scraper.services.GsonIO;
 import com.rfdhd.scraper.services.MailClient;
-import org.pmw.tinylog.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -23,6 +24,8 @@ import java.util.Map;
 import static com.rfdhd.scraper.utility.MachineChecker.isProdMachine;
 
 public class DigestCreator {
+
+    private static Logger logger = (Logger) LoggerFactory.getLogger(DigestCreator.class);
 
     public static void main(String[] args) {
         ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfiguration.class);
@@ -58,11 +61,11 @@ public class DigestCreator {
                 try {
                     contentBuilder.write();
                 } catch (IOException e) {
-                    Logger.error("Could not write email to file | " + e.getMessage());
+                    logger.error("Could not write email to file | {}", e.getMessage());
                 }
             }
         } else {
-            Logger.info("dailyDigestJson was empty; no email sent.");
+            logger.info("dailyDigestJson was empty; no email sent.");
         }
 
         gsonIO.move(filePaths.getDailyDigestJson(), filePaths.getArchiveJson());

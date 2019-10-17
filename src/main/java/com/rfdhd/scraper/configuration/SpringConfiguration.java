@@ -1,12 +1,13 @@
 package com.rfdhd.scraper.configuration;
 
+import ch.qos.logback.classic.Logger;
 import com.rfdhd.scraper.model.FilePaths;
 import com.rfdhd.scraper.model.NoConfigurationException;
 import com.rfdhd.scraper.model.configuration.Authentication;
 import com.rfdhd.scraper.model.configuration.Configuration;
 import com.rfdhd.scraper.model.configuration.EmailSettings;
 import com.rfdhd.scraper.services.Scraper;
-import org.pmw.tinylog.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -19,29 +20,8 @@ import java.util.Properties;
 @ComponentScan("com.rfdhd.scraper")
 public class SpringConfiguration {
 
+    private static Logger logger = (Logger) LoggerFactory.getLogger(SpringConfiguration.class);
     private Configuration configuration = null;
-
-    @Bean
-    Configuration getConfiguration() {
-
-        if (configuration == null) {
-            ConfigurationLoader configurationLoader = new ConfigurationLoader();
-            try {
-                Logger.info("Loading configuration.json");
-                configuration = configurationLoader.loadConfiguration();
-            } catch (NoConfigurationException | FileNotFoundException e) {
-                Logger.error("Error with loading configuration | " + e.getMessage());
-                Logger.error("Exiting app.");
-                System.exit(1);
-            }
-
-            configuration.updateUsernameAndPassword();
-
-            return configuration;
-        }
-
-        return configuration;
-    }
 
     @Bean
     FilePaths getFilePaths() {
@@ -54,11 +34,33 @@ public class SpringConfiguration {
         filePaths.setDailyDigestJson(rootFolder + "dailyDigest.json");
         filePaths.setArchiveJson(rootFolder + "archive.json");
 
-        Logger.info("Setting scrapingsJson to: " + filePaths.getScrapingsJson());
-        Logger.info("Setting dailyDigestJson to: " + filePaths.getDailyDigestJson());
-        Logger.info("Setting archiveJson to: " + filePaths.getArchiveJson());
+        logger.info("Setting scrapingsJson to: {}", filePaths.getScrapingsJson());
+        logger.info("Setting dailyDigestJson to: {}", filePaths.getDailyDigestJson());
+        logger.info("Setting archiveJson to: {}", filePaths.getArchiveJson());
 
         return filePaths;
+    }
+
+    @Bean
+    Configuration getConfiguration() {
+
+        if (configuration == null) {
+            ConfigurationLoader configurationLoader = new ConfigurationLoader();
+            try {
+                logger.info("Loading configuration.json");
+                configuration = configurationLoader.loadConfiguration();
+            } catch (NoConfigurationException | FileNotFoundException e) {
+                logger.error("Error with loading configuration | {}", e.getMessage());
+                logger.error("Exiting app.");
+                System.exit(1);
+            }
+
+            configuration.updateUsernameAndPassword();
+
+            return configuration;
+        }
+
+        return configuration;
     }
 
     @Bean
