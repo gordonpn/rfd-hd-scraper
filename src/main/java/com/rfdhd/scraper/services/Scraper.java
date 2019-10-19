@@ -104,8 +104,7 @@ public class Scraper {
                         .replace("]", "")
                         .trim();
                 topicTitle = unformattedRetailer;
-            }
-            if (StringUtils.isNotEmpty(retailer) && !rawTopicTitle.toLowerCase().contains(retailer.toLowerCase())) {
+            } else if (!rawTopicTitle.toLowerCase().contains(retailer.toLowerCase())) {
                 topicTitle = retailer + " " + rawTopicTitle;
             }
 

@@ -3,6 +3,7 @@ package com.rfdhd.scraper.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.WordUtils;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -67,7 +68,10 @@ public class ThreadInfo {
     }
 
     public void setTopicTitle(String value) {
-        value = Arrays.stream(value.split("\\s+")).distinct().collect(Collectors.joining(" "));
+        value = Arrays.stream(value.toLowerCase().split("\\s+"))
+                .distinct()
+                .collect(Collectors.joining(" "));
+        value = WordUtils.capitalize(value);
         this.topicTitle = value;
     }
 
