@@ -89,12 +89,12 @@ public class Scraper {
         String id = line.attr("data-thread-id");
         if (!id.equals("")) {
             logger.debug("Parsing thread ID: {}", id);
-            String topicTitle = "";
             String retailer = line.getElementsByClass("topictitle_retailer").text();
             String unformattedRetailer;
             String rawTopicTitle = line.getElementsByClass("topic_title_link").text();
             String prefix = "http://forums.redflagdeals.com";
             String link = line.getElementsByClass("topic_title_link").attr("href");
+            String topicTitle = rawTopicTitle;
 
             if (StringUtils.isEmpty(retailer)) {
                 unformattedRetailer = line.getElementsByClass("topictitle")
