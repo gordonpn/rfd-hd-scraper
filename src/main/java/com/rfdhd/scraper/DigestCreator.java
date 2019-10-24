@@ -55,7 +55,7 @@ public class DigestCreator {
                 List<String> mailingList = configuration.getMailingList();
                 String content = contentBuilder.getHtmlContent();
 
-                mailClient.prepareAndSend(mailingList, content);
+                mailingList.forEach(email -> mailClient.prepareAndSend(email, content));
 
             } else {
                 try {
