@@ -122,7 +122,7 @@ public class ThreadInfo {
         if (votes == null) {
             return 0;
         } else {
-            return Integer.parseInt(votes);
+            return Integer.parseInt(votes.replace(",", ""));
         }
     }
 
