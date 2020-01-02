@@ -7,7 +7,6 @@ import com.rfdhd.scraper.services.GsonIO;
 import io.github.cdimascio.dotenv.Dotenv;
 import io.javalin.Javalin;
 import io.javalin.plugin.json.JavalinJson;
-import io.javalin.plugin.rendering.vue.VueComponent;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -30,8 +29,7 @@ public class Start {
         JavalinJson.setToJsonMapper(gson::toJson);
 
         Javalin app = Javalin.create(javalinConfig -> {
-            javalinConfig.addStaticFiles("/vue");
-            javalinConfig.enableWebjars();
+            javalinConfig.addStaticFiles("/public");
         }).start(Integer.parseInt(dotenv.get("PORT", "7000")));
 
         app.before("/top24h", ctx -> {
@@ -41,9 +39,6 @@ public class Start {
             }
         });
         app.get("/top24h", ctx -> ctx.json(dailyDigestMap).status(200));
-        app.get("/", new VueComponent("<rf-hd-scraper></rf-hd-scraper"));
-        app.get("/sign-up", new VueComponent("<sign-up></sign-up>"));
-        app.error(404, "html", new VueComponent("<not-found></not-found"));
     }
 
 }
