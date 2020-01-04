@@ -36,6 +36,7 @@ public class MailClient {
             mailSender.send(mimeMessagePreparator);
         } catch (MailException e) {
             logger.error("Error occurred while trying to send email | {}", e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 }

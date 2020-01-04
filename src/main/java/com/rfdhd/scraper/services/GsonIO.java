@@ -53,6 +53,7 @@ public class GsonIO {
             createFile(filepath);
         } catch (IOException e) {
             logger.error("Error with reader. | {}", e.getMessage());
+            throw new RuntimeException(e);
         }
 
         return mapFromJson;
@@ -70,6 +71,7 @@ public class GsonIO {
 
         } catch (IOException e) {
             logger.error("Error with writer. | {}", e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 

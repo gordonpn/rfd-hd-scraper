@@ -68,6 +68,7 @@ public class Scraper {
             }
         } catch (IOException e) {
             logger.error("Error with scraping page | {}", e.getMessage());
+            throw new RuntimeException(e);
         }
         return null;
     }
