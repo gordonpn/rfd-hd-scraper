@@ -68,21 +68,12 @@ java -cp *.jar com.rfdhd.scraper.DigestCreator
 
 ##### Phase 4
 * [ ]  Add commandline flags to differentiate testing on prod and prod
-* [ ]  Utilize Pushbullet API or Slack bot to send real-time notifications (top scraping of each hour)
+* [x]  A front-end
 
 ##### Phase 5
 * [ ]  Write tests
 * [ ]  Improve styling of email template
 * [ ]  Integrate MongoDB or lowdb for a database
 
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-## Acknowledgment
-Those who provided me moral support on my first real project!
-
 ## License
-[Apache License 2.0](https://choosealicense.com/licenses/apache-2.0/)
-
-## Project status
-To me, I believe this project is 90% finished, the core features are all there. What's left to do are nice extras.
+[MIT License](https://choosealicense.com/licenses/mit/)

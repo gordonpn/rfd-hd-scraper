@@ -2,13 +2,179 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Front-end for a personal project">
+    <meta name="author" content="Gordon Pham-Nguyen">
+
     <title>Red Flag Deals Scraper</title>
-    <link rel="stylesheet" href="styles.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script src="https://kit.fontawesome.com/9701f76a42.js" crossorigin="anonymous"></script>
+
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+
 </head>
-<body>
-<div>
-    <h1>RED FLAG DEALS SCRAPER</h1>
-</div>
+<body id="page-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">Red Flag Deals Scraper</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#deals">Deals</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#sign-up">Sign up</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<header class="bg-primary text-white">
+    <div class="container text-center">
+        <h1>Red Flag Deals Scraper</h1>
+        <p class="lead">Here you can find the hottest deals from the Hot Deals forums in the last 24 hours</p>
+    </div>
+</header>
+
+<section id="deals">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2>Deals</h2>
+                <div id="deals-list">
+                    <ul class="list-group" id="loading">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <i class="fas fa-circle-notch fa-spin"></i>
+                        </li>
+                    </ul>
+                    <script type="text/javascript">
+
+                        async function loadDeals() {
+                            let deals = [];
+                            $.getJSON('/top24h', (data) => {
+                                for (let key in data.value) {
+                                    if (data.value.hasOwnProperty(key)) {
+                                        let deal = {};
+                                        deal["title"] = data.value[key]["Title"];
+                                        deal["link"] = data.value[key]["Forum link"];
+                                        deal["votes"] = data.value[key]["Votes"];
+                                        deals.push(deal);
+                                    }
+                                }
+                            });
+                            await new Promise(r => setTimeout(r, 1500));
+                            return deals;
+                        }
+
+                        loadDeals().then((deals) => {
+                            let ul = document.createElement('ul');
+                            ul.className = "list-group";
+
+                            document.getElementById('deals-list').appendChild(ul);
+                            deals.forEach((deal) => {
+                                let li = document.createElement('li');
+                                let a = document.createElement('a');
+                                let span = document.createElement('span');
+
+                                li.className = "list-group-item d-flex justify-content-between align-items-center";
+                                a.setAttribute("href", `${deal.link}`);
+                                a.textContent = `${deal.title}`;
+                                span.className = "badge badge-primary badge-pill";
+                                span.textContent = `${deal.votes}`;
+
+                                li.appendChild(a);
+                                li.appendChild(span);
+                                ul.appendChild(li);
+                            });
+                            let loading = document.getElementById('loading');
+                            loading.remove();
+                        });
+                    </script>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="sign-up" class="bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2>Sign up for the mailing list</h2>
+                <form>
+                    <label>
+                        <p class="label-txt">Enter your name</p>
+                        <input type="text" class="input">
+                        <div class="line-box">
+                            <div class="line"></div>
+                        </div>
+                    </label>
+                    <label>
+                        <p class="label-txt">Enter your email</p>
+                        <input type="text" class="input">
+                        <div class="line-box">
+                            <div class="line"></div>
+                        </div>
+                    </label>
+                    <button type="submit">submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2>Contact me</h2>
+                <p class="lead">If you'd like to get in contact with me</p>
+                <ul class="fa-ul">
+                    <li><a href="mailto:gordon.pn6@gmail.com"><span class="fa-li"><i class="fas fa-at"></i></span>Email
+                        me</a></li>
+                    <li><a href="https://github.com/gpnn/rfd-hd-scraper"><span class="fa-li"><i
+                            class="fas fa-code-branch"></i></span>This GitHub Project</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Gordon Pham-Nguyen 2019</p>
+    </div>
+</footer>
+
+<script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+<script src="js/nav.js"></script>
 
 </body>
 </html>

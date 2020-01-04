@@ -21,6 +21,7 @@ public class Start {
         ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfiguration.class);
         FilePaths filePaths = context.getBean(FilePaths.class);
         Dotenv dotenv = Dotenv.load();
+        int port = Integer.parseInt(dotenv.get("PORT", "7000"));
 
         AtomicReference<LocalDateTime> lastFetched = new AtomicReference<>(LocalDateTime.now());
         GsonIO gsonIO = new GsonIO();
@@ -28,9 +29,7 @@ public class Start {
         AtomicReference<Map> dailyDigestMap = new AtomicReference<>(gsonIO.read(filePaths.getDailyDigestJson()));
         JavalinJson.setToJsonMapper(gson::toJson);
 
-        Javalin app = Javalin.create(javalinConfig -> {
-            javalinConfig.addStaticFiles("/public");
-        }).start(Integer.parseInt(dotenv.get("PORT", "7000")));
+        Javalin app = Javalin.create(javalinConfig -> javalinConfig.addStaticFiles("/public")).start(port);
 
         app.before("/top24h", ctx -> {
             if (Math.abs(ChronoUnit.MINUTES.between(lastFetched.get(), LocalDateTime.now())) > 20) {
