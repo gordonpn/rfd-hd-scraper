@@ -38,6 +38,9 @@ public class Start {
             }
         });
         app.get("/top24h", ctx -> ctx.json(dailyDigestMap).status(200));
+        app.get("/mailing-list", ctx -> {
+
+        });
     }
 
 }
