@@ -7,9 +7,11 @@ There also exists a front-end at http://deals.gordon-pn.com to view the current 
 
 ---
 ![Website](https://img.shields.io/website?style=flat-square&url=http%3A%2F%2Fdeals.gordon-pn.com)
+![GitHub](https://img.shields.io/github/license/gpnn/rfd-hd-scraper?style=flat-square)
+
 ![GitHub top language](https://img.shields.io/github/languages/top/gpnn/rfd-hd-scraper?style=flat-square)
 ![GitHub language count](https://img.shields.io/github/languages/count/gpnn/rfd-hd-scraper?style=flat-square)
-![GitHub](https://img.shields.io/github/license/gpnn/rfd-hd-scraper?style=flat-square)
+
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/gpnn/rfd-hd-scraper?style=flat-square)
 ![GitHub last commit](https://img.shields.io/github/last-commit/gpnn/rfd-hd-scraper?style=flat-square)
 
