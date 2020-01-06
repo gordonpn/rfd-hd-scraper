@@ -33,11 +33,11 @@
                             <tr th:each="value : ${values}">
                                 <h2>
                                     <a href="http://gordonpn.codes" th:href="${value.link}">
-                                        <span th:text="${value.topicTitle}">Some shit that's on sale.</span>
+                                        <span th:text="${value.topicTitle}">Deal title</span>
                                     </a>
                                 </h2>
                                 <p>
-                                    <span th:text="${value.content}">Short description of that shit.</span>
+                                    <span th:text="${value.content}">Short description of the deal</span>
                                 </p>
                             </tr>
                         </table>

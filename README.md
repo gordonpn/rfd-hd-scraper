@@ -1,5 +1,31 @@
 # RFDHDscraper
-Scrapes the Red Flag Deals Hot Deals forum for view-worthy content.
+
+## Description
+
+This project aims to scrape the content of the [Hot Deals forums](http://forums.redflagdeals.com/hot-deals-f9/), keep track of all interesting and relevant deals, as well as archive all other deals. All relevant deals are emailed daily to a mailing list and then archived. 
+There also exists a front-end at http://deals.gordon-pn.com to view the current relevant deals.
+
+---
+![Website](https://img.shields.io/website?style=flat-square&url=http%3A%2F%2Fdeals.gordon-pn.com)
+![GitHub top language](https://img.shields.io/github/languages/top/gpnn/rfd-hd-scraper?style=flat-square)
+![GitHub language count](https://img.shields.io/github/languages/count/gpnn/rfd-hd-scraper?style=flat-square)
+![GitHub](https://img.shields.io/github/license/gpnn/rfd-hd-scraper?style=flat-square)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/gpnn/rfd-hd-scraper?style=flat-square)
+![GitHub last commit](https://img.shields.io/github/last-commit/gpnn/rfd-hd-scraper?style=flat-square)
+
+## Technologies
+
+* Maven: Dependency management
+* Boostrap: CSS framework for front-end
+* jQuery: front-end
+* Javalin: Web framework for Java for the back-end
+* Spring Framework: Utilized Thymeleaf for email templates as well as some dependency injection
+* jsoup: library to parse HTML documents
+
+## Prerequisites
+
+* Java 8+
+* Apache Maven 3.6+
 
 ## Installation
 Clone the master branch into your workspace.<br>Compile and package using Maven.
@@ -7,20 +33,31 @@ Clone the master branch into your workspace.<br>Compile and package using Maven.
 mvn clean compile package
 ```
 
-## Usage
+## Configuration
 Edit the configuration.json to your needs.<br>
 You must set your gmail and password as environment variables.<br>
 In my case, my prod machine was running on Linux and my test machines were running on Mac and Windows.<br>
 Those settings come from the ConfigurationLoader.java.
 
-The main class "com.rfdhd.scraper.App" is used for scraping the forum.<br>
+## Usage
+
+The main class `com.rfdhd.scraper.App` is used for scraping the forum.<br>
 ```bash
 java -cp *.jar com.rfdhd.scraper.App
 ```
-The main class "com.rfdhd.scraper.DigestCreator" is used for sending the daily digest email. It will take the content of dailyDigest.json as source.
+The main class `com.rfdhd.scraper.DigestCreator` is used for sending the daily digest email. It will take the content of dailyDigest.json as source.
 ```bash
 java -cp *.jar com.rfdhd.scraper.DigestCreator
 ```
+The main class `com.rfdhd.scraper.Start` is used to start the back-end to respond to the HTTP requests.
+```bash
+java -cp *.jar com.rfdhd.scraper.Start
+```
+
+## Use case
+
+The Scraper and the DigestCreator are both automated in Jenkins in order to have the most up to date information on deals.
+
 ## Roadmap/Todo
 
 ##### Phase 1
@@ -69,6 +106,8 @@ java -cp *.jar com.rfdhd.scraper.DigestCreator
 ##### Phase 4
 * [ ]  Add commandline flags to differentiate testing on prod and prod
 * [x]  A front-end
+* [ ]  Finish implementing back-end for signing up
+* [ ]  Refactor how the configurations are acquired.
 
 ##### Phase 5
 * [ ]  Write tests
