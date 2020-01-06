@@ -1,4 +1,4 @@
-# RFDHDscraper
+# Red Flag Deals Hot Deals Scraper
 
 ## Description
 
