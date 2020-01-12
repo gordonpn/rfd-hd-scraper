@@ -98,6 +98,8 @@
 
                                 li.className = "list-group-item d-flex justify-content-between align-items-center";
                                 a.setAttribute("href", `${deal.link}`);
+                                a.setAttribute("rel", "noopener noreferrer");
+                                a.setAttribute("target", "_blank");
                                 a.textContent = `${deal.title}`;
                                 span.className = "badge badge-primary badge-pill";
                                 span.textContent = `${deal.votes}`;
@@ -106,8 +108,17 @@
                                 li.appendChild(span);
                                 ul.appendChild(li);
                             });
-                            let loading = document.getElementById('loading');
-                            loading.remove();
+
+                            if (deals.length < 1) {
+                                let li = document.createElement('li');
+
+                                li.className = "list-group-item d-flex justify-content-between align-items-center";
+                                li.textContent = "No deals currently, please check back later!";
+
+                                ul.appendChild(li);
+                            }
+
+                            document.getElementById('loading').remove();
                         });
                     </script>
                 </div>
@@ -144,7 +155,7 @@
                 <h2>Contact me</h2>
                 <p class="lead">If you'd like to get in contact with me</p>
                 <ul class="fa-ul">
-                    <li><a href="mailto:gordon.pn6@gmail.com"><span class="fa-li"><i class="fas fa-at"></i></span>Email
+                    <li><a href="mailto:contact@gordon-pn.com"><span class="fa-li"><i class="fas fa-at"></i></span>Email
                         me</a></li>
                     <li><a href="https://github.com/gpnn/rfd-hd-scraper"><span class="fa-li"><i
                             class="fas fa-code-branch"></i></span>This GitHub Project</a></li>
