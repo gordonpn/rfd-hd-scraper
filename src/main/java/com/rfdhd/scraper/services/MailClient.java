@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public class MailClient {
 
     private static Logger logger = (Logger) LoggerFactory.getLogger(MailClient.class);
-    private final String FROM_EMAIL = "gordon.pn6+noreply@gmail.com";
+    private static final String FROM_EMAIL = "deals@gordon-pn.com";
     private JavaMailSender mailSender;
 
     @Autowired

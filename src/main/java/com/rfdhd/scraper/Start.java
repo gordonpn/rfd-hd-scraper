@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.rfdhd.scraper.configuration.SpringConfiguration;
 import com.rfdhd.scraper.model.FilePaths;
 import com.rfdhd.scraper.services.GsonIO;
+import com.rfdhd.scraper.services.NewsSignUp;
 import io.github.cdimascio.dotenv.Dotenv;
 import io.javalin.Javalin;
 import com.rfdhd.scraper.model.ThreadInfo;
@@ -39,7 +40,12 @@ public class Start {
         });
         app.get("/top24h", ctx -> ctx.json(currentDeals).status(200));
         app.get("/mailing-list", ctx -> {
+            NewsSignUp signUp = new NewsSignUp();
             String userEmail = ctx.queryParam("email");
+
+            signUp.saveEmail(userEmail);
+
+            ctx.redirect("/mailing-list.html", 300);
         });
     }
 
