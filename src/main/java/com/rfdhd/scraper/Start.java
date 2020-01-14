@@ -39,14 +39,6 @@ public class Start {
             }
         });
         app.get("/top24h", ctx -> ctx.json(currentDeals).status(200));
-        app.get("/mailing-list", ctx -> {
-            NewsSignUp signUp = new NewsSignUp();
-            String userEmail = ctx.queryParam("email");
-
-            signUp.saveEmail(userEmail);
-
-            ctx.redirect("/mailing-list.html", 300);
-        });
     }
 
     private static Map<String, ThreadInfo> getLatest() {
@@ -63,8 +55,6 @@ public class Start {
                 dailyDigestMap.put(threadID, threadInfo);
             }
         });
-
         return dailyDigestMap;
     }
-
 }
