@@ -6,6 +6,8 @@ This project aims to scrape the content of the [Hot Deals forums](http://forums.
 There also exists a front-end at http://deals.gordon-pn.com to view the current relevant deals.
 
 ---
+http://deals.gordon-pn.com
+
 ![Website](https://img.shields.io/website?style=flat-square&url=http%3A%2F%2Fdeals.gordon-pn.com)
 ![GitHub](https://img.shields.io/github/license/gpnn/rfd-hd-scraper?style=flat-square)
 
