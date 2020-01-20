@@ -68,21 +68,19 @@
                         </li>
                     </ul>
                     <script type="text/javascript">
-
                         async function loadDeals() {
                             let deals = [];
-                            $.getJSON('/top24h', (data) => {
-                                for (let key in data.value) {
-                                    if (data.value.hasOwnProperty(key)) {
-                                        let deal = {};
-                                        deal["title"] = data.value[key]["Title"];
-                                        deal["link"] = data.value[key]["Forum link"];
-                                        deal["votes"] = data.value[key]["Votes"];
-                                        deals.push(deal);
-                                    }
+                            let response = await fetch('/top24h');
+                            let data = await response.json();
+                            for (let key in data.value) {
+                                if (data.value.hasOwnProperty(key)) {
+                                    let deal = {};
+                                    deal["title"] = data.value[key]["Title"];
+                                    deal["link"] = data.value[key]["Forum link"];
+                                    deal["votes"] = data.value[key]["Votes"];
+                                    deals.push(deal);
                                 }
-                            });
-                            await new Promise(r => setTimeout(r, 1500));
+                            }
                             return deals;
                         }
 
@@ -167,7 +165,11 @@
 
 <footer class="py-5 bg-dark">
     <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Gordon Pham-Nguyen 2019</p>
+        <p class="m-0 text-center text-white">Copyright &copy; Gordon Pham-Nguyen
+            <script>
+                document.write(new Date().getFullYear());
+            </script>
+        </p>
     </div>
 </footer>
 
