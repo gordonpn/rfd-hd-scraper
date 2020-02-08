@@ -1,10 +1,13 @@
 package com.rfdhd.scraper.api;
 
+import ch.qos.logback.classic.Logger;
 import com.google.gson.Gson;
 import com.rfdhd.scraper.configuration.SpringConfiguration;
 import com.rfdhd.scraper.model.FilePaths;
 import com.rfdhd.scraper.model.ThreadInfo;
 import com.rfdhd.scraper.services.GsonIO;
+import com.rfdhd.scraper.services.NewsSignUp;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import spark.Route;
@@ -18,13 +21,15 @@ import static java.time.temporal.ChronoUnit.HOURS;
 
 public class API {
 
+    private static Logger logger = (Logger) LoggerFactory.getLogger(API.class);
+    private static Map<String, ThreadInfo> currentDeals;
+    private static AtomicReference<LocalDateTime> lastFetched;
+    private static boolean isFirstFetch;
+
     private API() {
         throw new AssertionError("The API methods should be accessed statically");
     }
 
-    private static Map<String, ThreadInfo> currentDeals;
-    private static AtomicReference<LocalDateTime> lastFetched;
-    private static boolean isFirstFetch;
 
     public static void initialize() {
         lastFetched = new AtomicReference<>(LocalDateTime.now());
@@ -58,9 +63,22 @@ public class API {
                     dailyDigestMap.put(threadID, threadInfo);
                 }
             });
+            logger.info("Returning fresh deals");
             currentDeals = dailyDigestMap;
             return currentDeals;
         }
+        logger.info("Returning cached deals");
         return currentDeals;
+    }
+
+    public static Route signUp() {
+        return (req, res) -> {
+            String userEmail = req.params(":email");
+            logger.info("User email given was : {}", userEmail);
+            res.status(200);
+            res.redirect("/mailing-list.html");
+
+            return "Success " + userEmail;
+        };
     }
 }

@@ -26,6 +26,7 @@ public class Server {
         path("/api", () -> {
             before("/*", (req, res) -> logger.info("Received api call at {}", LocalDateTime.now()));
             get("/top24h", API.getData());
+            get("/mailing-list/:email", API.signUp());
         });
     }
 }

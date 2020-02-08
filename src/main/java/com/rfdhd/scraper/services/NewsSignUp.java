@@ -32,6 +32,8 @@ public class NewsSignUp {
             } catch (IOException e) {
                 logger.error("Error with NewsSignUp class while writing file. | {}", e.getMessage());
             }
+
+            configuration.setMailingList(mailingList);
         }
     }
 
