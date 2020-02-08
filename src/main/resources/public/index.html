@@ -72,14 +72,13 @@
                             const deals = [];
                             const response = await fetch('/api/top24h');
                             const data = await response.json();
-                            for (const key in data.value) {
-                                if (data.value.hasOwnProperty(key)) {
-                                    const deal = {};
-                                    deal["title"] = data.value[key]["Title"];
-                                    deal["link"] = data.value[key]["Forum link"];
-                                    deal["votes"] = data.value[key]["Votes"];
-                                    deals.push(deal);
-                                }
+                            const values = Object.values(data);
+                            for (const value of values) {
+                                const deal = {};
+                                deal["title"] = value["Title"];
+                                deal["link"] = value["Forum link"];
+                                deal["votes"] = value["Votes"];
+                                deals.push(deal);
                             }
                             return deals;
                         }
