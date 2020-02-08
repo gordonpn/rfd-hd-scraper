@@ -28,3 +28,4 @@ rfdhdscraper.iml
 hs_err_pid*
 !/src/main/resources/configuration.json
 src/main/resources/configuration.json
+src/main/resources/.env
