@@ -6,20 +6,14 @@ import com.rfdhd.scraper.model.FilePaths;
 import com.rfdhd.scraper.model.ThreadInfo;
 import com.rfdhd.scraper.model.configuration.Configuration;
 import com.rfdhd.scraper.report.DailyDigestEmailContent;
-import com.rfdhd.scraper.services.ContentBuilder;
-import com.rfdhd.scraper.services.DigestPreparer;
-import com.rfdhd.scraper.services.GsonIO;
-import com.rfdhd.scraper.services.MailClient;
+import com.rfdhd.scraper.services.*;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.mail.javamail.JavaMailSender;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.rfdhd.scraper.utility.MachineChecker.isProdMachine;
 
@@ -52,7 +46,7 @@ public class DigestCreator {
             if (isProdMachine()) {
 
                 MailClient mailClient = new MailClient(mailSender);
-                List<String> mailingList = configuration.getMailingList();
+                Set<String> mailingList = NewsSignUp.read();
                 String content = contentBuilder.getHtmlContent();
 
                 mailingList.forEach(email -> mailClient.prepareAndSend(email, content));
