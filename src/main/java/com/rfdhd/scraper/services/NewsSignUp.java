@@ -17,6 +17,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.HashSet;
+import java.util.Set;
 
 public class NewsSignUp {
 
@@ -28,7 +29,7 @@ public class NewsSignUp {
 
     public static void saveEmail(String userEmail) {
         if (isValid(userEmail)) {
-            HashSet<String> mailingList = read();
+            Set<String> mailingList = read();
             mailingList.add(userEmail);
             write(mailingList);
         }
@@ -40,7 +41,7 @@ public class NewsSignUp {
         return emailValidator.isValid(userEmail);
     }
 
-    private static HashSet<String> read() {
+    public static Set<String> read() {
         ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfiguration.class);
         Configuration configuration = context.getBean(Configuration.class);
 
@@ -61,7 +62,7 @@ public class NewsSignUp {
         return mailingList;
     }
 
-    private static void write(HashSet<String> mailingList) {
+    private static void write(Set<String> mailingList) {
         ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfiguration.class);
         Configuration configuration = context.getBean(Configuration.class);
 
