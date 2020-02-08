@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 
 import static spark.Spark.*;
 
-public class Server {
+public class Start {
 
-    private static Logger logger = (Logger) LoggerFactory.getLogger(Server.class);
+    private static Logger logger = (Logger) LoggerFactory.getLogger(Start.class);
 
     public static void main(String[] args) {
 
