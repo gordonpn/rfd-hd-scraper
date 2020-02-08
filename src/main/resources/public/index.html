@@ -70,7 +70,7 @@
                     <script type="text/javascript">
                         async function loadDeals() {
                             let deals = [];
-                            let response = await fetch('/top24h');
+                            let response = await fetch('/api/top24h');
                             let data = await response.json();
                             for (let key in data.value) {
                                 if (data.value.hasOwnProperty(key)) {
@@ -131,7 +131,7 @@
         <div class="row">
             <div class="col-lg-8 mx-auto">
                 <h2>Sign up for the mailing list</h2>
-                <form method="get" action="/mailing-list.html">
+                <form method="get" action="/api/mailing-list">
                     <label>
                         <p class="label-txt">Enter your email</p>
                         <input required type="email" class="input" name="email">
