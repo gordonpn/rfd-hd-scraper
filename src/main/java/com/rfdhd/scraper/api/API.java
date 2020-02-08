@@ -74,6 +74,8 @@ public class API {
     public static Route signUp() {
         return (req, res) -> {
             String userEmail = req.queryParams("email");
+            NewsSignUp.saveEmail(userEmail);
+
             logger.info("User email given was : {}", userEmail);
             res.status(200);
             res.redirect("/mailing-list.html");

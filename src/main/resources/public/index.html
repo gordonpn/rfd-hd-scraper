@@ -69,12 +69,12 @@
                     </ul>
                     <script type="text/javascript">
                         async function loadDeals() {
-                            let deals = [];
-                            let response = await fetch('/api/top24h');
-                            let data = await response.json();
-                            for (let key in data.value) {
+                            const deals = [];
+                            const response = await fetch('/api/top24h');
+                            const data = await response.json();
+                            for (const key in data.value) {
                                 if (data.value.hasOwnProperty(key)) {
-                                    let deal = {};
+                                    const deal = {};
                                     deal["title"] = data.value[key]["Title"];
                                     deal["link"] = data.value[key]["Forum link"];
                                     deal["votes"] = data.value[key]["Votes"];
@@ -85,14 +85,14 @@
                         }
 
                         loadDeals().then((deals) => {
-                            let ul = document.createElement('ul');
+                            const ul = document.createElement('ul');
                             ul.className = "list-group";
 
                             document.getElementById('deals-list').appendChild(ul);
                             deals.forEach((deal) => {
-                                let li = document.createElement('li');
-                                let a = document.createElement('a');
-                                let span = document.createElement('span');
+                                const li = document.createElement('li');
+                                const a = document.createElement('a');
+                                const span = document.createElement('span');
 
                                 li.className = "list-group-item d-flex justify-content-between align-items-center";
                                 a.setAttribute("href", `${deal.link}`);
@@ -108,7 +108,7 @@
                             });
 
                             if (deals.length < 1) {
-                                let li = document.createElement('li');
+                                const li = document.createElement('li');
 
                                 li.className = "list-group-item d-flex justify-content-between align-items-center";
                                 li.textContent = "No deals currently, please check back later!";
