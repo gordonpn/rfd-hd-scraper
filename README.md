@@ -5,6 +5,12 @@
 This project aims to scrape the content of the [Hot Deals forums](http://forums.redflagdeals.com/hot-deals-f9/), keep track of all interesting and relevant deals, as well as archive all other deals. All relevant deals are emailed daily to a mailing list and then archived. 
 There also exists a front-end at http://deals.gordon-pn.com to view the current relevant deals.
 
+## Motivation
+
+Red Flag Deals does aggregate deals on their front page, but the Hot Deals **Forums** are community driven and sourced by anybody. This is where the purpose of my project comes into play, this project scrapes the Hot Deals Forums several times per day and displays them on a front-end. 
+
+With this project, I saved myself the chore of checking the (messy) forum a few times a day while still being aware of the good deals posted by the community.
+
 ---
 http://deals.gordon-pn.com
 
