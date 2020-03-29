@@ -23,10 +23,18 @@ With this project, I saved myself the chore of checking the (messy) forum a few 
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/gpnn/rfd-hd-scraper?style=flat-square)
 ![GitHub last commit](https://img.shields.io/github/last-commit/gpnn/rfd-hd-scraper?style=flat-square)
 
+## Screenshots
+
+### Daily email
+
+<a href="./docs/daily-email.png"><img src="./docs/daily-email.png" height="600"></a>
+
+Template made by @tiffzeng
+
 ## Technologies
 
 * Maven: Dependency management
-* Boostrap: CSS framework for front-end
+* Bootstrap: CSS framework for front-end
 * jQuery: front-end
 * Javalin: Web framework for Java for the back-end
 * Spring Framework: Utilized Thymeleaf for email templates as well as some dependency injection
@@ -80,7 +88,7 @@ The Scraper and the DigestCreator are both automated in Jenkins in order to have
 
 ## Roadmap/Todo
 
-##### Phase 1
+### Phase 1
 
 * [x]  Use the Jsoup library to scrape data correctly.
 * [x]  Save all the scraped data in a map.
@@ -91,7 +99,7 @@ The Scraper and the DigestCreator are both automated in Jenkins in order to have
 * [x]  Filter the raw map using the utility class.
 * [x]  Save the filtered map into currentLinks.json
 
-##### Phase 2
+### Phase 2
 
 * [x]  Parse direct link to product
 * [x]  Create a configuration file in resources with the property of pages to scrape.
@@ -108,7 +116,7 @@ The Scraper and the DigestCreator are both automated in Jenkins in order to have
 * [x]  Environment variables getter
 * [x]  Implement Spring framework beans
 
-##### Phase 3
+### Phase 3
 
 * [x]  Add content body under h2
 * [x]  Add a good readme.md
@@ -126,14 +134,14 @@ The Scraper and the DigestCreator are both automated in Jenkins in order to have
 * [x]  Filter out threads older than 72 hours when preparing email.
 * [x]  Read from config and template within the jar
 
-##### Phase 4
+### Phase 4
 
 * [ ]  Add command line flags to differentiate testing on prod and prod
 * [x]  A front-end
 * [ ]  Finish implementing back-end for signing up
 * [ ]  Refactor how the configurations are acquired.
 
-##### Phase 5
+### Phase 5
 
 * [ ]  Write tests
 * [ ]  Improve styling of email template
