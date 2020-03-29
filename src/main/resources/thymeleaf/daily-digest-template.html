@@ -1,44 +1,65 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
-    <style>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title> Daily Digest of Red Flag Deals </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="supported-color-schemes" content="light dark">
+    <style type="text/css">
+
         * {
-            font-family: sans-serif;
-        }
-
-        #title {
-            color: #c9383e;
-        }
-
-        a {
-            color: #879eb0;
-        }
-
-        p {
-            color: #282829;
+            font-family: "Trebuchet MS";
+            font-size: 14pt;
         }
     </style>
+
 </head>
-<body>
-<div id="title">
-    <h1 align="center">Daily Digest of Red Flag Deals of <span th:text="${date}">2019-09-12</span></h1>
-</div>
-<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable">
+<body style="margin: 0; padding: 0;">
+
+<table id="page" border="0" cellpadding="0" cellspacing="0" width="100%">
     <tr>
-        <td align="center" valign="top">
-            <table border="0" cellpadding="20" cellspacing="0" width="600" id="emailContainer">
+        <td>
+            <table id="container" align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse;">
                 <tr>
-                    <td align="center" valign="top">
-                        <table border="0" cellpadding="20" cellspacing="0" width="100%" id="emailBody">
-                            <tr th:each="value : ${values}">
-                                <h2>
-                                    <a href="http://gordonpn.codes" th:href="${value.link}">
-                                        <span th:text="${value.topicTitle}">Deal title</span>
-                                    </a>
-                                </h2>
-                                <p>
-                                    <span th:text="${value.content}">Short description of the deal</span>
-                                </p>
+                    <td>
+                        <table id="header" style="background-image: linear-gradient(#3b4a6b,#3b4a6b) ;padding: 30pt" border="0" cellpadding="5" cellspacing="10" width="100%">
+                            <tr>
+                                <td align="center">
+                                    <span style="color: #FFFFFF; -webkit-text-fill-color: #FFFFFF !important; letter-spacing: 2pt; text-transform: uppercase;"> Daily Digest of </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <span style="color:#fc5185; -webkit-text-fill-color: #fc5185 !important; letter-spacing: -3pt; font-weight: bolder; font-size: 68pt;"> RedFlagDeals </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <span style="color: #FFFFFF; -webkit-text-fill-color: #FFFFFF !important; letter-spacing: 2pt;" th:text="${date}">2019-09-12 </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" valign="center">
+                        <table border="0" cellpadding="20" cellspacing="0" width="600" id="emailContainer">
+                            <tr>
+                                <td align="center" valign="center">
+                                    <table style="box-shadow: 0 0 3px #3b4a6b; border-radius: 3px;" border="0" cellpadding="20" cellspacing="0" width="100%" id="emailBody">
+                                        <tr th:each="value : ${values}">
+                                            <h2>
+                                                <a style="color:#fc5185; -webkit-text-fill-color: #fc5185 !important;" href="http://gordonpn.codes" th:href="${value.link}">
+                                                    <span th:text="${value.topicTitle}">Deal title</span>
+                                                </a>
+                                            </h2>
+                                            <p>
+                                                <span th:text="${value.content}">Short description of the deal</span>
+                                            </p>
+                                        </tr>
+                                    </table>
+                                </td>
                             </tr>
                         </table>
                     </td>
