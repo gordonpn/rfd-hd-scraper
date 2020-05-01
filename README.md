@@ -1,5 +1,11 @@
 # Red Flag Deals Hot Deals Scraper
 
+## Update
+
+**I started this project when I was on my first internship, this have changed since then and I have decided to rewrite this project! This project will no longer be maintained and I will link to the replacement.**
+
+---
+
 ## Description
 
 This project aims to scrape the content of the [Hot Deals forums](http://forums.redflagdeals.com/hot-deals-f9/), keep track of all interesting and relevant deals, as well as archive all other deals. All relevant deals are emailed daily to a mailing list and then archived.
@@ -12,16 +18,8 @@ Red Flag Deals does aggregate deals on their front page, but the Hot Deals **For
 With this project, I saved myself the chore of checking the (messy) forum a few times a day while still being aware of the good deals posted by the community.
 
 ---
-<https://gordon-pn.com/deals>
 
-![Website](https://img.shields.io/website?style=flat-square&url=http%3A%2F%2Fdeals.gordon-pn.com)
-![GitHub](https://img.shields.io/github/license/gpnn/rfd-hd-scraper?style=flat-square)
-
-![GitHub top language](https://img.shields.io/github/languages/top/gpnn/rfd-hd-scraper?style=flat-square)
-![GitHub language count](https://img.shields.io/github/languages/count/gpnn/rfd-hd-scraper?style=flat-square)
-
-![GitHub commit activity](https://img.shields.io/github/commit-activity/m/gpnn/rfd-hd-scraper?style=flat-square)
-![GitHub last commit](https://img.shields.io/github/last-commit/gpnn/rfd-hd-scraper?style=flat-square)
+![GitHub](https://badgen.net/github/license/gordonpn/rfd-hd-scraper)
 
 ## Screenshots
 
