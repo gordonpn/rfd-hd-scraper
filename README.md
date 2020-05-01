@@ -2,7 +2,7 @@
 
 ## Update
 
-**I started this project when I was on my first internship, this have changed since then and I have decided to rewrite this project! This project will no longer be maintained and I will link to the replacement.**
+**I started this project when I was on my first internship, things have changed since then and I have decided to rewrite this project! This project will no longer be maintained and I will link to the replacement.**
 
 ---
 
