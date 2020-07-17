@@ -1,6 +1,8 @@
 # Red Flag Deals Hot Deals Scraper
 
-### I started this project when I was on my first internship, things have changed since then and I have decided to rewrite this project! This project will no longer be maintained and the replacement is located here: https://github.com/gordonpn/hot-flag-deals.
+## Note
+
+**I started this project when I was on my first internship, I have learned a lot since then and I have decided to rewrite this project (in Go)! This project will no longer be maintained and the replacement is located here: <https://github.com/gordonpn/hot-flag-deals>.**
 
 ---
 
@@ -18,6 +20,7 @@ With this project, I saved myself the chore of checking the (messy) forum a few 
 ---
 
 ![GitHub](https://badgen.net/github/license/gordonpn/rfd-hd-scraper)
+[![Project Status: Moved to https://github.com/gordonpn/hot-flag-deals](https://www.repostatus.org/badges/latest/moved.svg)](https://www.repostatus.org/#moved) to [github.com/gordonpn/hot-flag-deals](https://github.com/gordonpn/hot-flag-deals)
 
 ## Screenshots
 
